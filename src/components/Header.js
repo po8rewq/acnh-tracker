@@ -10,26 +10,24 @@ import {
   NavbarText
 } from 'reactstrap';
 
-const Header = (props) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
-
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">AC:NH tracker</NavbarBrand>
+        <NavbarBrand href={process.env.PUBLIC_URL}>AC:NH tracker</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/fish">Fish</NavLink>
+              <NavLink href={process.env.PUBLIC_URL + "/fish"}>Fish</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/bugs">Bugs</NavLink>
+              <NavLink href={process.env.PUBLIC_URL + "/bugs"}>Bugs</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/fossils">Fossils</NavLink>
+              <NavLink href={process.env.PUBLIC_URL + "/fossils"}>Fossils</NavLink>
             </NavItem>
           </Nav>
           <NavbarText>About</NavbarText>

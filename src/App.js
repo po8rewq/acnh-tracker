@@ -13,14 +13,11 @@ const App = () => {
     <Router>
       <Container>
         <Header />
-
         <p></p>
         <Alert color="warning">All data are stored locally.</Alert>
         <p></p>
         <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
         <p></p>
-
-
         <Switch>
           <Route path="/bugs">
             <BugsTable hemisphere={hemisphere} />
