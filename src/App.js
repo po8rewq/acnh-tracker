@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Alert, Container } from 'reactstrap';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Header from './components/Header';
+import FishTable from './components/FishTable';
+import BugsTable from './components/BugsTable';
+import HemisphereButton from './components/HemisphereButton';
+import useLocalStorage from './hooks/useLocalStorage';
 
-function App() {
+const App = () => {
+  const [hemisphere, setHemisphere] = useLocalStorage('hemisphere', 'northern');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Container>
+        <Header />
+
+        <p></p>
+        <Alert color="warning">All data are stored locally.</Alert>
+        <p></p>
+        <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
+        <p></p>
+
+
+        <Switch>
+          <Route path="/bugs">
+            <BugsTable hemisphere={hemisphere} />
+          </Route>
+          <Route path="/">
+            <FishTable hemisphere={hemisphere} />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
+  )
 }
 
 export default App;
