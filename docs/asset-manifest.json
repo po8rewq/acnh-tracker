@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/static/js/main.cc28a223.chunk.js",
-    "main.js.map": "/static/js/main.cc28a223.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f1b4061a.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f1b4061a.js.map",
-    "static/css/2.89f067aa.chunk.css": "/static/css/2.89f067aa.chunk.css",
-    "static/js/2.4d64ccb0.chunk.js": "/static/js/2.4d64ccb0.chunk.js",
-    "static/js/2.4d64ccb0.chunk.js.map": "/static/js/2.4d64ccb0.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.a9910b02a84e1bcb2a40508337e53a24.js": "/precache-manifest.a9910b02a84e1bcb2a40508337e53a24.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.89f067aa.chunk.css.map": "/static/css/2.89f067aa.chunk.css.map",
-    "static/css/main.5ecd60fb.chunk.css.map": "/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.4d64ccb0.chunk.js.LICENSE.txt": "/static/js/2.4d64ccb0.chunk.js.LICENSE.txt"
+    "main.css": "https://po8rewq.github.io/acnh-tracker/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "https://po8rewq.github.io/acnh-tracker/static/js/main.cc28a223.chunk.js",
+    "main.js.map": "https://po8rewq.github.io/acnh-tracker/static/js/main.cc28a223.chunk.js.map",
+    "runtime-main.js": "https://po8rewq.github.io/acnh-tracker/static/js/runtime-main.f1b4061a.js",
+    "runtime-main.js.map": "https://po8rewq.github.io/acnh-tracker/static/js/runtime-main.f1b4061a.js.map",
+    "static/css/2.89f067aa.chunk.css": "https://po8rewq.github.io/acnh-tracker/static/css/2.89f067aa.chunk.css",
+    "static/js/2.4d64ccb0.chunk.js": "https://po8rewq.github.io/acnh-tracker/static/js/2.4d64ccb0.chunk.js",
+    "static/js/2.4d64ccb0.chunk.js.map": "https://po8rewq.github.io/acnh-tracker/static/js/2.4d64ccb0.chunk.js.map",
+    "index.html": "https://po8rewq.github.io/acnh-tracker/index.html",
+    "precache-manifest.a9910b02a84e1bcb2a40508337e53a24.js": "https://po8rewq.github.io/acnh-tracker/precache-manifest.a9910b02a84e1bcb2a40508337e53a24.js",
+    "service-worker.js": "https://po8rewq.github.io/acnh-tracker/service-worker.js",
+    "static/css/2.89f067aa.chunk.css.map": "https://po8rewq.github.io/acnh-tracker/static/css/2.89f067aa.chunk.css.map",
+    "static/css/main.5ecd60fb.chunk.css.map": "https://po8rewq.github.io/acnh-tracker/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.4d64ccb0.chunk.js.LICENSE.txt": "https://po8rewq.github.io/acnh-tracker/static/js/2.4d64ccb0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f1b4061a.js",
