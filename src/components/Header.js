@@ -26,9 +26,9 @@ const Header = () => {
             <NavItem>
               <NavLink href={process.env.PUBLIC_URL + "/#/bugs"}>Bugs</NavLink>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <NavLink href={process.env.PUBLIC_URL + "/#/fossils"}>Fossils</NavLink>
-            </NavItem>
+            </NavItem> */}
           </Nav>
           <NavbarText>About</NavbarText>
         </Collapse>
