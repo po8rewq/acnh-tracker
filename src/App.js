@@ -19,10 +19,10 @@ const App = () => {
         <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
         <p></p>
         <Switch>
-          <Route path={process.env.PUBLIC_URL + "/bugs"}>
+          <Route path={"/acnh-tracker/bugs"}>
             <BugsTable hemisphere={hemisphere} />
           </Route>
-          <Route path={process.env.PUBLIC_URL + "/"}>
+          <Route path={"acnh-tracker/acnh-tracker/"}>
             <FishTable hemisphere={hemisphere} />
           </Route>
         </Switch>

@@ -16,18 +16,18 @@ const Header = () => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href={process.env.PUBLIC_URL}>AC:NH tracker</NavbarBrand>
+        <NavbarBrand href="acnh-tracker">AC:NH tracker</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/fish"}>Fish</NavLink>
+              <NavLink href={"/acnh-tracker/fish"}>Fish</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/bugs"}>Bugs</NavLink>
+              <NavLink href={"/acnh-tracker/bugs"}>Bugs</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/fossils"}>Fossils</NavLink>
+              <NavLink href={"/acnh-tracker/fossils"}>Fossils</NavLink>
             </NavItem>
           </Nav>
           <NavbarText>About</NavbarText>
