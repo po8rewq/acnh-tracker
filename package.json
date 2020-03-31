@@ -1,6 +1,6 @@
 {
   "name": "ac-checklist",
-  "homepage": "https://github.com/po8rewq/acnh-tracker",
+  "homepage": "https://po8rewq.github.io/acnh-tracker/",
   "version": "0.1.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
