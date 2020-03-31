@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b45c37930767b4cd4a8d75a6dfdaff90",
+    "revision": "e4539287bf86be529184cb671eab0668",
     "url": "/acnh-tracker/index.html"
   },
   {
-    "revision": "da2b0ac53d818608753f",
+    "revision": "6e7e8ac113f241f31355",
     "url": "/acnh-tracker/static/css/2.89f067aa.chunk.css"
   },
   {
-    "revision": "464262ecdbbc7d110127",
+    "revision": "67eca84002c4d8d70d75",
     "url": "/acnh-tracker/static/css/main.5ecd60fb.chunk.css"
   },
   {
-    "revision": "da2b0ac53d818608753f",
-    "url": "/acnh-tracker/static/js/2.8d1a6e30.chunk.js"
+    "revision": "6e7e8ac113f241f31355",
+    "url": "/acnh-tracker/static/js/2.c161141d.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/acnh-tracker/static/js/2.8d1a6e30.chunk.js.LICENSE.txt"
+    "url": "/acnh-tracker/static/js/2.c161141d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "464262ecdbbc7d110127",
-    "url": "/acnh-tracker/static/js/main.39ee334d.chunk.js"
+    "revision": "67eca84002c4d8d70d75",
+    "url": "/acnh-tracker/static/js/main.d5b39075.chunk.js"
   },
   {
     "revision": "cd9235be15d66676c5c4",
