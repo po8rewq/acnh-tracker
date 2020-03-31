@@ -16,10 +16,10 @@
     "static/js/2.4d64ccb0.chunk.js.LICENSE.txt": "https://po8rewq.github.io/acnh-tracker/static/js/2.4d64ccb0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "https://po8rewq.github.io/acnh-tracker/static/js/runtime-main.f1b4061a.js",
-    "https://po8rewq.github.io/acnh-tracker/static/css/2.89f067aa.chunk.css",
-    "https://po8rewq.github.io/acnh-tracker/static/js/2.4d64ccb0.chunk.js",
-    "https://po8rewq.github.io/acnh-tracker/static/css/main.5ecd60fb.chunk.css",
-    "https://po8rewq.github.io/acnh-tracker/static/js/main.cc28a223.chunk.js"
+    "static/js/runtime-main.f1b4061a.js",
+    "static/css/2.89f067aa.chunk.css",
+    "static/js/2.4d64ccb0.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.cc28a223.chunk.js"
   ]
 }
