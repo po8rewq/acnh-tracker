@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,33 +7,33 @@ import BugIcons from './BugIcons';
 import bugsJson from '../data/bugs.json';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getMonth } from '../utils';
+import ProgressBar from './ProgressBar';
+import Search from './Search';
+import Checkbox from './Checkbox';
 
 const BodyRow = styled.tr`
   td {
     vertical-align: middle;
   }
-
-  input {
-    /* Double-sized Checkboxes */
-    -ms-transform: scale(2); /* IE */
-    -moz-transform: scale(2); /* FF */
-    -webkit-transform: scale(2); /* Safari and Chrome */
-    -o-transform: scale(2); /* Opera */
-    padding: 10px;
-    margin: 2px;
-    cursor: pointer;
-  }
 `;
 
 const BugsTable = ({ hemisphere }) => {
+  const [search, setSearch] = useState('');
+  const [list, setList] = useState(bugsJson);
   const [bugs, setBugs] = useLocalStorage('bugs', []);
+
+  useEffect(() => {
+    const s = search.trimLeft().trimRight();
+    const newValue = s === '' ? [...bugsJson] : bugsJson.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
+    setList(newValue);
+  }, [search])
 
   const renderMonth = (f, month) => {
     const index = getMonth(month, hemisphere)
     return <FontAwesomeIcon icon={f[index] === 1 ? faCheck : faMinus} />;
   }
 
-  const toggleFish = (id) => {
+  const toggleBug = (id) => {
     const index = bugs.indexOf(id);
     if (index === -1) {
       setBugs([...bugs, id]);
@@ -44,10 +44,12 @@ const BugsTable = ({ hemisphere }) => {
     }
   }
 
-  const renderBody = () => bugsJson.map(f => {
+  const onSearchChange = (e) => setSearch(e.target.value);
+
+  const renderBody = () => list.map(f => {
     return (
       <BodyRow key={f.id}>
-        <td><input type="checkbox" onChange={() => toggleFish(f.id)} checked={bugs.indexOf(f.id) !== -1} /></td>
+        <td><Checkbox onChange={() => toggleBug(f.id)} checked={bugs.indexOf(f.id) !== -1} /></td>
         <td><BugIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').replace('\'', '').toLowerCase()} />{f.name}</td>
         <td>{f.location}</td>
         <td>{f.price}</td>
@@ -68,30 +70,36 @@ const BugsTable = ({ hemisphere }) => {
     )
   })
   return (
-    <Table size="sm" hover borderless responsive>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Price</th>
-          <th>Time</th>
-          <th>Jan</th>
-          <th>Feb</th>
-          <th>Mar</th>
-          <th>Apr</th>
-          <th>May</th>
-          <th>Jun</th>
-          <th>Jul</th>
-          <th>Aug</th>
-          <th>Sep</th>
-          <th>Oct</th>
-          <th>Nov</th>
-          <th>Dec</th>
-        </tr>
-      </thead>
-      <tbody>{renderBody()}</tbody>
-    </Table>
+    <>
+      <div style={{ marginBottom: '10px', width: '100%', display: 'flex' }}>
+        <Search value={search} onChange={onSearchChange} />
+      </div>
+      <ProgressBar current={bugs.length} total={bugsJson.length} />
+      <Table size="sm" hover borderless responsive>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Time</th>
+            <th>Jan</th>
+            <th>Feb</th>
+            <th>Mar</th>
+            <th>Apr</th>
+            <th>May</th>
+            <th>Jun</th>
+            <th>Jul</th>
+            <th>Aug</th>
+            <th>Sep</th>
+            <th>Oct</th>
+            <th>Nov</th>
+            <th>Dec</th>
+          </tr>
+        </thead>
+        <tbody>{renderBody()}</tbody>
+      </Table>
+    </>
   )
 }
 

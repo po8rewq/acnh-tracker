@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,32 +7,29 @@ import FishIcons from './FishIcons';
 import fishJson from '../data/fish.json';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getMonth } from '../utils';
+import ProgressBar from './ProgressBar';
+import Search from './Search';
+import Checkbox from './Checkbox';
 
 const BodyRow = styled.tr`
   td {
     vertical-align: middle;
   }
-
-  input {
-    /* Double-sized Checkboxes */
-    -ms-transform: scale(2); /* IE */
-    -moz-transform: scale(2); /* FF */
-    -webkit-transform: scale(2); /* Safari and Chrome */
-    -o-transform: scale(2); /* Opera */
-    padding: 10px;
-    margin: 2px;
-    cursor: pointer;
-  }
 `;
 
 const FishTable = ({ hemisphere }) => {
+  const [search, setSearch] = useState('');
+  const [list, setList] = useState(fishJson);
   const [fish, setFish] = useLocalStorage('fish', []);
+
+  useEffect(() => {
+    const s = search.trimLeft().trimRight();
+    const newValue = s === '' ? [...fishJson] : fishJson.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
+    setList(newValue);
+  }, [search])
 
   const renderMonth = (f, month) => {
     const index = getMonth(month, hemisphere)
-    // dayjs().format('MMM').toLowerCase() === month => change color ?
-    // const isAvailable = {}
-    // if () return <FontAwesomeIcon icon={faCheck} color="#28a745" />;
     return <FontAwesomeIcon icon={f[index] === 1 ? faCheck : faMinus} />;
   }
 
@@ -47,10 +44,12 @@ const FishTable = ({ hemisphere }) => {
     }
   }
 
-  const renderBody = () => fishJson.map(f => {
+  const onSearchChange = (value) => setSearch(value);
+
+  const renderBody = () => list.map(f => {
     return (
       <BodyRow key={f.id}>
-        <td><input type="checkbox" onChange={() => toggleFish(f.id)} checked={fish.indexOf(f.id) !== -1} /></td>
+        <td><Checkbox onChange={() => toggleFish(f.id)} checked={fish.indexOf(f.id) !== -1} /></td>
         <td><FishIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').toLowerCase()} />{f.name}</td>
         <td>{f.location}</td>
         <td>{f.price}</td>
@@ -72,31 +71,37 @@ const FishTable = ({ hemisphere }) => {
     )
   })
   return (
-    <Table size="sm" hover borderless responsive>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Price</th>
-          <th>Shadow</th>
-          <th>Time</th>
-          <th>Jan</th>
-          <th>Feb</th>
-          <th>Mar</th>
-          <th>Apr</th>
-          <th>May</th>
-          <th>Jun</th>
-          <th>Jul</th>
-          <th>Aug</th>
-          <th>Sep</th>
-          <th>Oct</th>
-          <th>Nov</th>
-          <th>Dec</th>
-        </tr>
-      </thead>
-      <tbody>{renderBody()}</tbody>
-    </Table>
+    <>
+      <div style={{ marginBottom: '10px', width: '100%', display: 'flex' }}>
+        <Search value={search} onChange={onSearchChange} />
+      </div>
+      <ProgressBar current={fish.length} total={fishJson.length} />
+      <Table size="sm" hover borderless responsive>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Shadow</th>
+            <th>Time</th>
+            <th>Jan</th>
+            <th>Feb</th>
+            <th>Mar</th>
+            <th>Apr</th>
+            <th>May</th>
+            <th>Jun</th>
+            <th>Jul</th>
+            <th>Aug</th>
+            <th>Sep</th>
+            <th>Oct</th>
+            <th>Nov</th>
+            <th>Dec</th>
+          </tr>
+        </thead>
+        <tbody>{renderBody()}</tbody>
+      </Table>
+    </>
   )
 }
 
