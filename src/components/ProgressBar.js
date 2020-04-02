@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   height: 30px;
-  margin-bottom: 15px;
-
   .progress {
     height: 100%;
   }
@@ -14,8 +12,8 @@ const Wrapper = styled.div`
 const ProgressBar = ({ current, total }) => {
   const value = Math.round(current * 100 / total)
   return <Wrapper>
-    <Progress value={value} color="warning">
-      {`${value}%`}
+    <Progress value={value} striped color="warning">
+      <strong>{`${value}%`}</strong>
     </Progress>
   </Wrapper>
 }

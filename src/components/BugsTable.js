@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'reactstrap';
+import { Table, ButtonGroup, Button } from 'reactstrap';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import BugIcons from './BugIcons';
 import bugsJson from '../data/bugs.json';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getMonth, capitalize } from '../utils';
 import ProgressBar from './ProgressBar';
 import Search from './Search';
-import Checkbox from './Checkbox';
 import MonthTag from './MonthTag';
 
 const BodyRow = styled.tr`
+  cursor: pointer;
+
+  ${p => p.checked && `
+  background-color: #f0e8c0;
+  `}
+
   td {
     vertical-align: middle;
   }
@@ -20,12 +26,17 @@ const BugsTable = ({ hemisphere }) => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(bugsJson);
   const [bugs, setBugs] = useLocalStorage('bugs', []);
+  const [rSelected, setRSelected] = useState(1);
 
   useEffect(() => {
+    const baseList = rSelected === 2 ? bugsJson.filter(v => {
+      const currentMonth = dayjs().format('MMM').toLowerCase();
+      return v[currentMonth] === 1;
+    }) : [...bugsJson]
     const s = search.trimLeft().trimRight();
-    const newValue = s === '' ? [...bugsJson] : bugsJson.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
+    const newValue = s === '' ? baseList : baseList.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
     setList(newValue);
-  }, [search])
+  }, [search, rSelected])
 
   const renderMonth = (f, month) => {
     const index = getMonth(month, hemisphere);
@@ -47,9 +58,9 @@ const BugsTable = ({ hemisphere }) => {
 
   const renderBody = () => list.map(f => {
     return (
-      <BodyRow key={f.id}>
-        <td><Checkbox onChange={() => toggleBug(f.id)} checked={bugs.indexOf(f.id) !== -1} /></td>
-        <td><BugIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').replace('\'', '').toLowerCase()} />{f.name}</td>
+      <BodyRow key={f.id} onClick={() => toggleBug(f.id)} checked={bugs.indexOf(f.id) !== -1}>
+        <td><BugIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').replace('\'', '').toLowerCase()} /></td>
+        <td>{f.name}</td>
         <td>{f.location}</td>
         <td>{f.price}</td>
         <td>{f.time}</td>
@@ -70,10 +81,18 @@ const BugsTable = ({ hemisphere }) => {
   })
   return (
     <>
-      <div style={{ marginBottom: '10px', width: '100%', display: 'flex' }}>
+      <p>
         <Search value={search} onChange={onSearchChange} />
-      </div>
-      <ProgressBar current={bugs.length} total={bugsJson.length} />
+      </p>
+      <p>
+        <ButtonGroup>
+          <Button color={rSelected === 1 ? "primary" : "link"} onClick={() => setRSelected(1)} disabled={rSelected === 1}>See all</Button>
+          <Button color={rSelected === 2 ? "primary" : "link"} onClick={() => setRSelected(2)} disabled={rSelected === 2}>Only those I can catch</Button>
+        </ButtonGroup>
+      </p>
+      <p>
+        <ProgressBar current={bugs.length} total={bugsJson.length} />
+      </p>
       <Table size="sm" hover borderless responsive>
         <thead>
           <tr>

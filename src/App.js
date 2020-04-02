@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
 import FishTable from './components/FishTable';
@@ -12,10 +12,8 @@ const App = () => {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
+      <Header />
       <Container>
-        <Header />
-        <p></p>
-        <Alert color="warning">All data are stored locally.</Alert>
         <p></p>
         <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
         <p></p>

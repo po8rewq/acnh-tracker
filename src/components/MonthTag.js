@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   text-align: center;
   font-size: .75rem;
   padding: 0 5px;
+  border-radius: 3px;
 `;
 
 const MonthTag = ({ value, available }) => <Wrapper available={available}>{value}</Wrapper>

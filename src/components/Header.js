@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -7,18 +8,22 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Container,
 } from 'reactstrap';
 import AboutModal from './AboutModal';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState(false);
+  const location = useLocation();
 
   const toggle = () => setIsOpen(!isOpen);
   const toggleModal = () => setModal(!modal);
 
+  const currentPage = location.pathname === '/' ? '/fish' : location.pathname;
+
   return (
-    <div>
+    <Container>
       <AboutModal show={modal} toggle={toggleModal} />
       <Navbar color="light" light expand="md">
         <NavbarBrand href={process.env.PUBLIC_URL}>AC:NH tracker</NavbarBrand>
@@ -26,10 +31,10 @@ const Header = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + ""}>Fish</NavLink>
+              <NavLink href={process.env.PUBLIC_URL + "/#/fish"} active={currentPage === '/fish'}>Fish</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/#/bugs"}>Bugs</NavLink>
+              <NavLink href={process.env.PUBLIC_URL + "/#/bugs"} active={currentPage === '/bugs'}>Bugs</NavLink>
             </NavItem>
             {/* <NavItem>
               <NavLink href={process.env.PUBLIC_URL + "/#/fossils"}>Fossils</NavLink>
@@ -38,7 +43,7 @@ const Header = () => {
           <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
         </Collapse>
       </Navbar>
-    </div>
+    </Container>
   );
 }
 

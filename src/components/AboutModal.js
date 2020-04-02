@@ -6,31 +6,38 @@ const AboutModal = ({ toggle, show = false }) => (
     <ModalHeader toggle={toggle}>About</ModalHeader>
     <ModalBody>
       <p>
+        This project is open source, and you can find the code on <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">GitHub</a>. Feel free to report issues, suggest features, or even submit a pull request. Help support this project financially by donating—every little bit helps!
+      </p>
+      <p>
         All information is compiled from:
         <ul>
           <li>
-            <Button
-              color="link"
+            <a
               href="https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)"
               rel="noopener noreferrer"
               target="_blank"
-            >
-              https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)
-          </Button>
+            >https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)</a>
           </li>
           <li>
-            <Button
-              color="link"
+            <a
               href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)"
               rel="noopener noreferrer"
               target="_blank"
-            >
-              https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)
-          </Button>
+            >https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)</a>
+          </li>
+          <li>
+            <a
+              href="https://animalcrossing.fandom.com/wiki/Fossils_(New_Horizons)"
+              rel="noopener noreferrer"
+              target="_blank"
+            >https://animalcrossing.fandom.com/wiki/Fossils_(New_Horizons)</a>
           </li>
         </ul>
       </p>
-      <p>The project is hosted on <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">github</a>.</p>
+      {/* <p>
+        <h1>Privacy Policy</h1>
+
+      </p> */}
     </ModalBody>
     <ModalFooter>
       <Button color="secondary" onClick={toggle}>Close</Button>

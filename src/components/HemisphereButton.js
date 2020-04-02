@@ -12,11 +12,11 @@ const HemisphereButton = ({ hemisphere, callback }) => {
     <ButtonGroup>
       <Button
         disabled={hemisphere === 'northern'}
-        color={hemisphere === 'northern' ? 'success' : 'link'}
+        color={hemisphere === 'northern' ? 'primary' : 'link'}
         onClick={() => toggle('northern')}>Northern Hemisphere</Button>
       <Button
         disabled={hemisphere === 'southern'}
-        color={hemisphere === 'southern' ? 'success' : 'link'}
+        color={hemisphere === 'southern' ? 'primary' : 'link'}
         onClick={() => toggle('southern')}>Southern Hemisphere</Button>
     </ButtonGroup>
   )
