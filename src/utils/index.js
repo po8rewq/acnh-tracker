@@ -9,3 +9,8 @@ export const getMonth = (month, hemisphere) => {
   else if (secondHalf.indexOf(month) !== -1) return firstHalf[secondHalf.indexOf(month)]
   return 'N/A';
 }
+
+export const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}

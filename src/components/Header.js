@@ -7,14 +7,19 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText
 } from 'reactstrap';
+import AboutModal from './AboutModal';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [modal, setModal] = useState(false);
+
   const toggle = () => setIsOpen(!isOpen);
+  const toggleModal = () => setModal(!modal);
+
   return (
     <div>
+      <AboutModal show={modal} toggle={toggleModal} />
       <Navbar color="light" light expand="md">
         <NavbarBrand href={process.env.PUBLIC_URL}>AC:NH tracker</NavbarBrand>
         <NavbarToggler onClick={toggle} />
@@ -30,7 +35,7 @@ const Header = () => {
               <NavLink href={process.env.PUBLIC_URL + "/#/fossils"}>Fossils</NavLink>
             </NavItem> */}
           </Nav>
-          <NavbarText>About</NavbarText>
+          <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
         </Collapse>
       </Navbar>
     </div>

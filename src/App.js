@@ -9,6 +9,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 
 const App = () => {
   const [hemisphere, setHemisphere] = useLocalStorage('hemisphere', 'northern');
+
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Container>

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faMinus } from '@fortawesome/free-solid-svg-icons'
 import BugIcons from './BugIcons';
 import bugsJson from '../data/bugs.json';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { getMonth } from '../utils';
+import { getMonth, capitalize } from '../utils';
 import ProgressBar from './ProgressBar';
 import Search from './Search';
 import Checkbox from './Checkbox';
+import MonthTag from './MonthTag';
 
 const BodyRow = styled.tr`
   td {
@@ -29,8 +28,8 @@ const BugsTable = ({ hemisphere }) => {
   }, [search])
 
   const renderMonth = (f, month) => {
-    const index = getMonth(month, hemisphere)
-    return <FontAwesomeIcon icon={f[index] === 1 ? faCheck : faMinus} />;
+    const index = getMonth(month, hemisphere);
+    return <MonthTag available={f[index] === 1} value={capitalize(month)} />;
   }
 
   const toggleBug = (id) => {
@@ -83,18 +82,7 @@ const BugsTable = ({ hemisphere }) => {
             <th>Location</th>
             <th>Price</th>
             <th>Time</th>
-            <th>Jan</th>
-            <th>Feb</th>
-            <th>Mar</th>
-            <th>Apr</th>
-            <th>May</th>
-            <th>Jun</th>
-            <th>Jul</th>
-            <th>Aug</th>
-            <th>Sep</th>
-            <th>Oct</th>
-            <th>Nov</th>
-            <th>Dec</th>
+            <th colspan="12" style={{ textAlign: "center" }}>Availability</th>
           </tr>
         </thead>
         <tbody>{renderBody()}</tbody>
