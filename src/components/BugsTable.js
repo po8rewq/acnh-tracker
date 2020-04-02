@@ -44,7 +44,7 @@ const BugsTable = ({ hemisphere }) => {
     }
   }
 
-  const onSearchChange = (e) => setSearch(e.target.value);
+  const onSearchChange = (value) => setSearch(value);
 
   const renderBody = () => list.map(f => {
     return (
