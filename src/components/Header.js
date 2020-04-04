@@ -52,6 +52,9 @@ const Header = () => {
                 <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/bunny_day`}>
                   Bunny Day
                 </DropdownItem>
+                <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/cherry_blossom`}>
+                  Cherry-blossom
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
