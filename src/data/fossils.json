@@ -433,97 +433,97 @@
       "groupId": 17
     },
     {
-      "id": 56,
+      "id": 59,
       "name": "Quetzal torso",
       "price": 4500,
       "groupId": 17
     },
     {
-      "id": 57,
+      "id": 60,
       "name": "Left quetzal wing",
       "price": 5000,
       "groupId": 17
     },
     {
-      "id": 58,
+      "id": 61,
       "name": "Sabertooth skull",
       "price": 2500,
       "groupId": 18
     },
     {
-      "id": 59,
+      "id": 62,
       "name": "Sabertooth tail",
       "price": 2000,
       "groupId": 18
     },
     {
-      "id": 60,
+      "id": 63,
       "name": "Spino skull",
       "price": 4000,
       "groupId": 19
     },
     {
-      "id": 61,
+      "id": 64,
       "name": "Spino torso",
       "price": 5000,
       "groupId": 19
     },
     {
-      "id": 62,
+      "id": 65,
       "name": "Spino tail",
       "price": 4000,
       "groupId": 19
     },
     {
-      "id": 63,
+      "id": 66,
       "name": "Stego skull",
       "price": 4000,
       "groupId": 20
     },
     {
-      "id": 64,
+      "id": 67,
       "name": "Stego torso",
       "price": 5000,
       "groupId": 20
     },
     {
-      "id": 65,
+      "id": 68,
       "name": "Stego tail",
       "price": 4000,
       "groupId": 20
     },
     {
-      "id": 66,
+      "id": 69,
       "name": "Tricera skull",
       "price": 5500,
       "groupId": 21
     },
     {
-      "id": 67,
+      "id": 70,
       "name": "Tricera torso",
       "price": 5000,
       "groupId": 21
     },
     {
-      "id": 68,
+      "id": 71,
       "name": "Tricera tail",
       "price": 4500,
       "groupId": 21
     },
     {
-      "id": 69,
+      "id": 72,
       "name": "T. rex skull",
       "price": 6000,
       "groupId": 22
     },
     {
-      "id": 70,
+      "id": 73,
       "name": "T. rex torso",
       "price": 5500,
       "groupId": 22
     },
     {
-      "id": 71,
+      "id": 74,
       "name": "T. rex tail",
       "price": 5000,
       "groupId": 22
