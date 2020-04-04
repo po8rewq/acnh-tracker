@@ -4,7 +4,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
 import FishTable from './components/FishTable';
 import BugsTable from './components/BugsTable';
-import HemisphereButton from './components/HemisphereButton';
+import FossilsTable from './components/FossilsTable';
 import useLocalStorage from './hooks/useLocalStorage';
 
 const App = () => {
@@ -13,16 +13,17 @@ const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Header />
+      <p></p>
       <Container>
-        <p></p>
-        <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
-        <p></p>
         <Switch>
           <Route path="/bugs">
-            <BugsTable hemisphere={hemisphere} />
+            <BugsTable hemisphere={hemisphere} setHemisphere={setHemisphere} />
+          </Route>
+          <Route path="/fossils">
+            <FossilsTable />
           </Route>
           <Route path="/">
-            <FishTable hemisphere={hemisphere} />
+            <FishTable hemisphere={hemisphere} setHemisphere={setHemisphere} />
           </Route>
         </Switch>
       </Container>

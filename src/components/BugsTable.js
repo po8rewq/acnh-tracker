@@ -5,10 +5,11 @@ import dayjs from 'dayjs';
 import BugIcons from './BugIcons';
 import bugsJson from '../data/bugs.json';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { getMonth, capitalize } from '../utils';
+import { getMonth, capitalize, formatNameToImage } from '../utils';
 import ProgressBar from './ProgressBar';
 import Search from './Search';
 import MonthTag from './MonthTag';
+import HemisphereButton from './HemisphereButton';
 
 const BodyRow = styled.tr`
   cursor: pointer;
@@ -22,7 +23,7 @@ const BodyRow = styled.tr`
   }
 `;
 
-const BugsTable = ({ hemisphere }) => {
+const BugsTable = ({ hemisphere, setHemisphere }) => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(bugsJson);
   const [bugs, setBugs] = useLocalStorage('bugs', []);
@@ -59,7 +60,7 @@ const BugsTable = ({ hemisphere }) => {
   const renderBody = () => list.map(f => {
     return (
       <BodyRow key={f.id} onClick={() => toggleBug(f.id)} checked={bugs.indexOf(f.id) !== -1}>
-        <td><BugIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').replace('\'', '').toLowerCase()} /></td>
+        <td><BugIcons icon={formatNameToImage(f.name)} /></td>
         <td>{f.name}</td>
         <td>{f.location}</td>
         <td>{f.price}</td>
@@ -82,6 +83,9 @@ const BugsTable = ({ hemisphere }) => {
   return (
     <>
       <p>
+        <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
+      </p>
+      <p>
         <Search value={search} onChange={onSearchChange} />
       </p>
       <p>
@@ -101,7 +105,7 @@ const BugsTable = ({ hemisphere }) => {
             <th>Location</th>
             <th>Price</th>
             <th>Time</th>
-            <th colspan="12" style={{ textAlign: "center" }}>Availability</th>
+            <th colSpan="12" style={{ textAlign: "center" }}>Availability</th>
           </tr>
         </thead>
         <tbody>{renderBody()}</tbody>

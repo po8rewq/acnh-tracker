@@ -36,9 +36,9 @@ const Header = () => {
             <NavItem>
               <NavLink href={process.env.PUBLIC_URL + "/#/bugs"} active={currentPage === '/bugs'}>Bugs</NavLink>
             </NavItem>
-            {/* <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/#/fossils"}>Fossils</NavLink>
-            </NavItem> */}
+            <NavItem>
+              <NavLink href={process.env.PUBLIC_URL + "/#/fossils"} active={currentPage === '/fossils'}>Fossils</NavLink>
+            </NavItem>
           </Nav>
           <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
         </Collapse>

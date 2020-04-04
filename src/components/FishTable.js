@@ -5,10 +5,11 @@ import dayjs from 'dayjs';
 import FishIcons from './FishIcons';
 import fishJson from '../data/fish.json';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { getMonth, capitalize } from '../utils';
+import { getMonth, capitalize, formatNameToImage } from '../utils';
 import ProgressBar from './ProgressBar';
 import Search from './Search';
 import MonthTag from './MonthTag';
+import HemisphereButton from './HemisphereButton';
 
 const BodyRow = styled.tr`
   cursor: pointer;
@@ -22,7 +23,7 @@ const BodyRow = styled.tr`
   }
 `;
 
-const FishTable = ({ hemisphere }) => {
+const FishTable = ({ hemisphere, setHemisphere }) => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(fishJson);
   const [fish, setFish] = useLocalStorage('fish', []);
@@ -59,7 +60,7 @@ const FishTable = ({ hemisphere }) => {
   const renderBody = () => list.map(f => {
     return (
       <BodyRow key={f.id} onClick={() => toggleFish(f.id)} checked={fish.indexOf(f.id) !== -1}>
-        <td><FishIcons icon={f.name.replace(/[" "]/g, '').replace('-', '').toLowerCase()} /></td>
+        <td><FishIcons icon={formatNameToImage(f.name)} /></td>
         <td>{f.name}</td>
         <td>{f.location}</td>
         <td>{f.price}</td>
@@ -83,6 +84,9 @@ const FishTable = ({ hemisphere }) => {
   return (
     <>
       <p>
+        <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
+      </p>
+      <p>
         <Search value={search} onChange={onSearchChange} />
       </p>
       <p>
@@ -103,7 +107,7 @@ const FishTable = ({ hemisphere }) => {
             <th>Price</th>
             <th>Shadow</th>
             <th>Time</th>
-            <th colspan="12" style={{ textAlign: "center" }}>Availability</th>
+            <th colSpan="12" style={{ textAlign: "center" }}>Availability</th>
           </tr>
         </thead>
         <tbody>{renderBody()}</tbody>
