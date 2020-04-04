@@ -9,6 +9,10 @@ import {
   NavItem,
   NavLink,
   Container,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
 } from 'reactstrap';
 import AboutModal from './AboutModal';
 
@@ -20,7 +24,8 @@ const Header = () => {
   const toggle = () => setIsOpen(!isOpen);
   const toggleModal = () => setModal(!modal);
 
-  const currentPage = location.pathname === '/' ? '/fish' : location.pathname;
+  const pathname = location.pathname.split('/')[1]
+  const currentPage = pathname || 'fish';
 
   return (
     <Container>
@@ -31,14 +36,24 @@ const Header = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/#/fish"} active={currentPage === '/fish'}>Fish</NavLink>
+              <NavLink href={`${process.env.PUBLIC_URL}/#/fish`} active={currentPage === 'fish'}>Fish</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/#/bugs"} active={currentPage === '/bugs'}>Bugs</NavLink>
+              <NavLink href={`${process.env.PUBLIC_URL}/#/bugs`} active={currentPage === 'bugs'}>Bugs</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={process.env.PUBLIC_URL + "/#/fossils"} active={currentPage === '/fossils'}>Fossils</NavLink>
+              <NavLink href={`${process.env.PUBLIC_URL}/#/fossils`} active={currentPage === 'fossils'}>Fossils</NavLink>
             </NavItem>
+            <UncontrolledDropdown nav inNavbar active={currentPage === 'diy'}>
+              <DropdownToggle nav caret >
+                Seasonal recipes
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/bunny_day`}>
+                  Bunny Day
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
           <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
         </Collapse>
