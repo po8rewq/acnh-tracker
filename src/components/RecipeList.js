@@ -23,11 +23,19 @@ const Wrapper = styled.div`
   }
 `;
 
+const supportedEvents = ['bunny_day', 'cherry_blossom'];
+
 const RecipeList = () => {
   let { event } = useParams();
   const [list, setList] = useState([])
   const [title, setTitle] = useState();
-  const [recipes, setRecipes] = useLocalStorage(`${event}_recipes`, [])
+
+  if (supportedEvents.indexOf(event) === -1) {
+    throw "Event not supported";
+  }
+
+  // TODO: find a better way?
+  const [recipes, setRecipes] = useLocalStorage(`recipes`, { 'bunny_day': [], 'cherry_blossom': [] })
 
   useEffect(() => {
     switch (event) {
@@ -43,13 +51,17 @@ const RecipeList = () => {
   }, [event])
 
   const toggleRecipe = (id) => {
-    const index = recipes.indexOf(id);
+    const index = (recipes[event] || []).indexOf(id);
     if (index === -1) {
-      setRecipes([...recipes, id]);
+      const newobj = { ...recipes };
+      newobj[event] = [...(newobj[event] || []), id]
+      setRecipes(newobj);
     } else {
-      const newArray = [...recipes];
+      const newobj = { ...recipes };
+      const newArray = [...(newobj[event] || [])];
       newArray.splice(index, 1);
-      setRecipes(newArray);
+      newobj[event] = newArray
+      setRecipes(newobj);
     }
   }
 
@@ -57,11 +69,11 @@ const RecipeList = () => {
     <Wrapper>
       <h3>{title}</h3>
       <p>
-        <ProgressBar current={recipes.length} total={list.length} />
+        <ProgressBar current={(recipes[event] || []).length} total={list.length} />
       </p>
       <ListGroup className={list}>
         {list.map(l => <ListGroupItem
-          active={recipes.indexOf(l.id) !== -1}
+          active={(recipes[event] || []).indexOf(l.id) !== -1}
           tag="button"
           action
           onClick={() => toggleRecipe(l.id)}
