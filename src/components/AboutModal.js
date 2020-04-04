@@ -6,7 +6,7 @@ const AboutModal = ({ toggle, show = false }) => (
     <ModalHeader toggle={toggle}>About</ModalHeader>
     <ModalBody>
       <p>
-        This project is open source, and you can find the code on <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">GitHub</a>. Feel free to report issues, suggest features, or even submit a pull request. Help support this project financially by donating—every little bit helps!
+        This project is open source, and you can find the code on <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">GitHub</a>. Feel free to report issues, suggest features, or even submit a pull request.
       </p>
       <p>
         All information is compiled from:
