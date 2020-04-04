@@ -3,6 +3,7 @@ Tracker for Animal Crossing: New Horizons, you can find the project [here](https
 
 ## Features 
 
- * View all bugs by hemisphere and when/where you can catch them
- * View all fish by hemisphere and when/where you can catch them
- * [wip] View all fossils
+ * View/track bugs by hemisphere and when/where you can catch them
+ * View/track fish by hemisphere and when/where you can catch them
+ * View/track fossils
+ * View/track events recipe list (Bunny Day)
