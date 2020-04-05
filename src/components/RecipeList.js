@@ -31,7 +31,7 @@ const RecipeList = () => {
   const [title, setTitle] = useState();
 
   if (supportedEvents.indexOf(event) === -1) {
-    throw "Event not supported";
+    throw new Error("Event not supported");
   }
 
   // TODO: find a better way?
@@ -46,6 +46,7 @@ const RecipeList = () => {
       case 'cherry_blossom':
         setTitle('Cherry-blossom');
         setList(cherryblossom);
+        break;
       default: break;
     }
   }, [event])

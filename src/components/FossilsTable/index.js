@@ -1,12 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
-import useLocalStorage from '../hooks/useLocalStorage';
-import fossilsJson from '../data/fossils.json';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import fossilsJson from '../../data/fossils.json';
 import FossilIcons from './FossilIcon';
-import Search from './Search';
-import ProgressBar from './ProgressBar';
-import { formatNameToImage } from '../utils/';
+import Search from '../Search';
+import ProgressBar from '../ProgressBar';
+import { formatNameToImage } from '../../utils';
 
 const BodyRow = styled.tr`
   cursor: pointer;

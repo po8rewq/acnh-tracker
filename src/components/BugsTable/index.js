@@ -3,13 +3,13 @@ import { Table, ButtonGroup, Button } from 'reactstrap';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import BugIcons from './BugIcons';
-import bugsJson from '../data/bugs.json';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { getMonth, capitalize, formatNameToImage } from '../utils';
-import ProgressBar from './ProgressBar';
-import Search from './Search';
-import MonthTag from './MonthTag';
-import HemisphereButton from './HemisphereButton';
+import bugsJson from '../../data/bugs.json';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { getMonth, capitalize, formatNameToImage } from '../../utils';
+import ProgressBar from '../ProgressBar';
+import Search from '../Search';
+import MonthTag from '../MonthTag';
+import HemisphereButton from '../HemisphereButton';
 
 const BodyRow = styled.tr`
   cursor: pointer;

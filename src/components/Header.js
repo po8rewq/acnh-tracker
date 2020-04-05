@@ -57,6 +57,9 @@ const Header = () => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            <NavItem>
+              <NavLink href={`${process.env.PUBLIC_URL}/#/turnips`} active={currentPage === 'turnips'}>Turnips</NavLink>
+            </NavItem>
           </Nav>
           <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
         </Collapse>

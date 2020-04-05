@@ -7,6 +7,7 @@ import BugsTable from './components/BugsTable';
 import FossilsTable from './components/FossilsTable';
 import useLocalStorage from './hooks/useLocalStorage';
 import RecipeList from './components/RecipeList';
+import TurnipsPage from './components/TurnipsPage';
 
 const App = () => {
   const [hemisphere, setHemisphere] = useLocalStorage('hemisphere', 'northern');
@@ -25,6 +26,9 @@ const App = () => {
           </Route>
           <Route path="/fossils">
             <FossilsTable />
+          </Route>
+          <Route path="/turnips">
+            <TurnipsPage />
           </Route>
           <Route path="/">
             <FishTable hemisphere={hemisphere} setHemisphere={setHemisphere} />

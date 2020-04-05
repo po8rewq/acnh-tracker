@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import icons from '../data/img/fossils'
+import icons from '../../data/img/fossils'
 
 const iconNames = Object.keys(icons);
 
