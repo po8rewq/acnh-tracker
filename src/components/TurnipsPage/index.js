@@ -8,12 +8,23 @@ import { Alert, ButtonGroup, Button } from 'reactstrap';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import * as DateUtils from '../../utils/dates';
 import AddPriceForm from './AddPriceForm';
+import SundayPriceForm from './SundayPriceForm';
+import Predictions from './Predictions';
+
+import Tooltip from 'chartist-plugin-tooltips'; // needed for chartist
+import Chartist from 'chartist';
 
 import 'chartist/dist/chartist.min.css';
-import SundayPriceForm from './SundayPriceForm';
+import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css';
 
 const Wrapper = styled.div`
   margin: 20px;
+  `;
+
+const ChartContainer = styled.div`
+  .ct-series-a .ct-line, .ct-series-b .ct-line {
+    opacity: .5;
+  }
 `;
 
 export const LABELS = ['Mon AM', 'Mon PM', 'Tue AM', 'Tue PM', 'Wed AM', 'Wed PM', 'Thu AM', 'Thu PM', 'Fri AM', 'Fri PM', 'Sat AM', 'Sat PM'];
@@ -22,21 +33,20 @@ const TurnipsPage = () => {
   const history = useHistory();
   const location = useLocation();
   /** indexed by the date of the sunday for the week ahead
-   * {
-   * '05-04-2020': {
+   * { '05-04-2020': {
    *    'sundayPrice': 123,
    *    'graph': [
    *        {when: 'mon_am', value: 90}, 
    *        {when: 'fri_pm', value: 9}
    *    ]
-   *  } 
-   * }
+   *  } }
    */
   const [turnips, setTurnips] = useLocalStorage('turnips', {})
 
   const [currentWeek, setCurrentWeek] = useState(null);
   const [sundayPrice, setSundayPrice] = useState(0);
   const [myTownData, setMyTownData] = useState([]);
+  const [predictions, setPredictions] = useState({ min: null, max: null })
 
   useEffect(() => {
     // get the week
@@ -67,15 +77,18 @@ const TurnipsPage = () => {
 
   const formateLabelName = (l) => l.trim().replace(' ', '_').toLowerCase()
 
+  const getFormatedData = (defaultValue = null) => LABELS.map(l => {
+    const value = myTownData.find(d => d.when === formateLabelName(l))
+    if (value) return value.price || defaultValue;
+    return defaultValue;
+  })
+
   const simpleLineChartData = {
     labels: LABELS,
     series: [
-      LABELS.map(l => {
-        const value = myTownData.find(d => d.when === formateLabelName(l))
-        if (value) return value.price;
-        return null;
-      })
-      // [], // estimate - TODO: min and max
+      [...(predictions.min ? predictions.min : [])],
+      [...(predictions.max ? predictions.max : [])],
+      getFormatedData(),
     ]
   }
 
@@ -84,9 +97,15 @@ const TurnipsPage = () => {
     chartPadding: {
       right: 50
     },
-    high: 500,
-    low: 50,
-    height: '300px',
+    high: 800,
+    low: 0,
+    height: '400px',
+    plugins: [
+      Chartist.plugins.tooltip({
+        anchorToPoint: true,
+        appendToBody: true,
+      })
+    ]
   };
 
   const onSaveSundayPrice = (value) => {
@@ -121,15 +140,21 @@ const TurnipsPage = () => {
     history.push(`${location.pathname}?date=${newDate}`)
   }
 
+  const displayEstimate = (min, max) => {
+    setPredictions({ min, max });
+  }
+
   return (
     <>
       <Wrapper>
         <Alert color="warning">
-          <strong>PLEASE READ</strong>
+          <strong>Notes</strong>
           <ul>
-            <li>Turnip prices fluctuate in the morning and again in the afternoon, from anywhere between <strong>50</strong> and <strong>445</strong> Bells</li>
             <li>if you want to update a value, just set it again, it will override the previous one</li>
             <li>if you want to remove a value, set the price to <strong>0</strong></li>
+            <li>You need to set the price from Daisy Mae to see the predictions</li>
+            <li>The predictions will be filtered by the values you add during the week</li>
+            <li>Click on the prediction line to see the graph (you can only see 1 at a time)</li>
           </ul>
         </Alert>
       </Wrapper>
@@ -143,9 +168,14 @@ const TurnipsPage = () => {
       <Wrapper>
         <SundayPriceForm onSave={onSaveSundayPrice} currentWeek={currentWeek} value={sundayPrice} />
       </Wrapper>
-      <ChartistGraph data={simpleLineChartData} type={'Line'} options={options} />
+      <ChartContainer>
+        <ChartistGraph data={simpleLineChartData} type={'Line'} options={options} />
+      </ChartContainer>
       <Wrapper>
         <AddPriceForm onSave={addNewPrice} />
+      </Wrapper>
+      <Wrapper>
+        <Predictions buyPrice={sundayPrice} sellPrices={getFormatedData(NaN)} displayEstimate={displayEstimate} />
       </Wrapper>
     </>
   );

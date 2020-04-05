@@ -34,10 +34,16 @@ const AboutModal = ({ toggle, show = false }) => (
           </li>
         </ul>
       </p>
-      {/* <p>
-        <h1>Privacy Policy</h1>
-
-      </p> */}
+      <p>
+        Other projects:
+        <ul>
+          <a
+            href="https://github.com/mikebryant/ac-nh-turnip-prices"
+            rel="noopener noreferrer"
+            target="_blank"
+          >ac-nh-turnip-prices</a>
+        </ul>
+      </p>
     </ModalBody>
     <ModalFooter>
       <Button color="secondary" onClick={toggle}>Close</Button>
