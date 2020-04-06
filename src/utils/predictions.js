@@ -14,11 +14,14 @@ function* generate_pattern_0_with_lengths(given_prices, high_phase_1_len, dec_ph
   /*
     // PATTERN 0: high, decreasing, high, decreasing, high
     work = 2;
+
+
     // high phase 1
     for (int i = 0; i < hiPhaseLen1; i++)
     {
       sellPrices[work++] = intceil(randfloat(0.9, 1.4) * basePrice);
     }
+
     // decreasing phase 1
     rate = randfloat(0.8, 0.6);
     for (int i = 0; i < decPhaseLen1; i++)
@@ -27,11 +30,13 @@ function* generate_pattern_0_with_lengths(given_prices, high_phase_1_len, dec_ph
       rate -= 0.04;
       rate -= randfloat(0, 0.06);
     }
+
     // high phase 2
     for (int i = 0; i < (hiPhaseLen2and3 - hiPhaseLen3); i++)
     {
       sellPrices[work++] = intceil(randfloat(0.9, 1.4) * basePrice);
     }
+
     // decreasing phase 2
     rate = randfloat(0.8, 0.6);
     for (int i = 0; i < decPhaseLen2; i++)
@@ -40,6 +45,7 @@ function* generate_pattern_0_with_lengths(given_prices, high_phase_1_len, dec_ph
       rate -= 0.04;
       rate -= randfloat(0, 0.06);
     }
+
     // high phase 3
     for (int i = 0; i < hiPhaseLen3; i++)
     {
@@ -126,8 +132,8 @@ function* generate_pattern_0_with_lengths(given_prices, high_phase_1_len, dec_ph
   }
 
   // Dec Phase 2
-  min_rate = 6000;
-  max_rate = 8000;
+  var min_rate = 6000;
+  var max_rate = 8000;
   for (var i = 2 + high_phase_1_len + dec_phase_1_len + high_phase_2_len; i < 2 + high_phase_1_len + dec_phase_1_len + high_phase_2_len + dec_phase_2_len; i++) {
     let min_pred = Math.floor(min_rate * buy_price / 10000);
     let max_pred = Math.ceil(max_rate * buy_price / 10000);
@@ -185,6 +191,7 @@ function* generate_pattern_0(given_prices) {
   /*
       decPhaseLen1 = randbool() ? 3 : 2;
       decPhaseLen2 = 5 - decPhaseLen1;
+
       hiPhaseLen1 = randint(0, 6);
       hiPhaseLen2and3 = 7 - hiPhaseLen1;
       hiPhaseLen3 = randint(0, hiPhaseLen2and3 - 1);
@@ -359,6 +366,7 @@ function* generate_pattern_3_with_peak(given_prices, peak_start) {
   /*
     // PATTERN 3: decreasing, spike, decreasing
     peakStart = randint(2, 9);
+
     // decreasing phase before the peak
     rate = randfloat(0.9, 0.4);
     for (work = 2; work < peakStart; work++)
@@ -367,12 +375,14 @@ function* generate_pattern_3_with_peak(given_prices, peak_start) {
       rate -= 0.03;
       rate -= randfloat(0, 0.02);
     }
+
     sellPrices[work++] = intceil(randfloat(0.9, 1.4) * (float)basePrice);
     sellPrices[work++] = intceil(randfloat(0.9, 1.4) * basePrice);
     rate = randfloat(1.4, 2.0);
     sellPrices[work++] = intceil(randfloat(1.4, rate) * basePrice) - 1;
     sellPrices[work++] = intceil(rate * basePrice);
     sellPrices[work++] = intceil(randfloat(1.4, rate) * basePrice) - 1;
+
     // decreasing phase after the peak
     if (work < 14)
     {
@@ -446,39 +456,61 @@ function* generate_pattern_3_with_peak(given_prices, peak_start) {
     });
   }
 
-  // TODO this could be made more accurate, I've not bothered with forward/backward calculating of the rate each side of the peak value
-  for (var i = peak_start + 2; i < peak_start + 5; i++) {
-    let min_pred = null;
-    let max_pred = null;
-    if (i === peak_start + 3) {
-      min_pred = predicted_prices[peak_start + 2].min;
-      max_pred = Math.ceil(2.0 * buy_price);
-    } else {
-      min_pred = Math.floor(1.4 * buy_price) - 1;
-      max_pred = Math.ceil(2.0 * buy_price) - 1;
+  // Main spike 1
+  let min_pred = Math.floor(1.4 * buy_price) - 1;
+  let max_pred = Math.ceil(2.0 * buy_price) - 1;
+  if (!isNaN(given_prices[peak_start + 2])) {
+    if (given_prices[peak_start + 2] < min_pred || given_prices[peak_start + 2] > max_pred) {
+      // Given price is out of predicted range, so this is the wrong pattern
+      return;
     }
-    if (!isNaN(given_prices[i])) {
-      if (given_prices[i] < min_pred || given_prices[i] > max_pred) {
-        // Given price is out of predicted range, so this is the wrong pattern
-        return;
-      }
-      min_pred = given_prices[i];
-      max_pred = given_prices[i];
-    }
-
-    predicted_prices.push({
-      min: min_pred,
-      max: max_pred,
-    });
+    min_pred = given_prices[peak_start + 2];
+    max_pred = given_prices[peak_start + 2];
   }
+  predicted_prices.push({
+    min: min_pred,
+    max: max_pred,
+  });
+
+  // Main spike 2
+  min_pred = predicted_prices[peak_start + 2].min;
+  max_pred = Math.ceil(2.0 * buy_price);
+  if (!isNaN(given_prices[peak_start + 3])) {
+    if (given_prices[peak_start + 3] < min_pred || given_prices[peak_start + 3] > max_pred) {
+      // Given price is out of predicted range, so this is the wrong pattern
+      return;
+    }
+    min_pred = given_prices[peak_start + 3];
+    max_pred = given_prices[peak_start + 3];
+  }
+  predicted_prices.push({
+    min: min_pred,
+    max: max_pred,
+  });
+
+  // Main spike 3
+  min_pred = Math.floor(1.4 * buy_price) - 1;
+  max_pred = predicted_prices[peak_start + 3].max - 1;
+  if (!isNaN(given_prices[peak_start + 4])) {
+    if (given_prices[peak_start + 4] < min_pred || given_prices[peak_start + 4] > max_pred) {
+      // Given price is out of predicted range, so this is the wrong pattern
+      return;
+    }
+    min_pred = given_prices[peak_start + 4];
+    max_pred = given_prices[peak_start + 4];
+  }
+  predicted_prices.push({
+    min: min_pred,
+    max: max_pred,
+  });
 
   if (peak_start + 5 < 14) {
-    min_rate = 4000;
-    max_rate = 9000;
+    var min_rate = 4000;
+    var max_rate = 9000;
 
     for (var i = peak_start + 5; i < 14; i++) {
-      let min_pred = Math.floor(min_rate * buy_price / 10000);
-      let max_pred = Math.ceil(max_rate * buy_price / 10000);
+      min_pred = Math.floor(min_rate * buy_price / 10000);
+      max_pred = Math.ceil(max_rate * buy_price / 10000);
 
 
       if (!isNaN(given_prices[i])) {
@@ -514,6 +546,7 @@ function* generate_pattern_3(given_prices) {
     yield* generate_pattern_3_with_peak(given_prices, peak_start);
   }
 }
+
 
 export function* generate_possibilities(sell_prices) {
   if (!isNaN(sell_prices[0])) {
@@ -557,6 +590,19 @@ export function analyze_possibilities(sell_prices) {
     pattern_number: 4,
     prices: global_min_max,
   });
+
+  for (let poss of generated_possibilities) {
+    var weekMins = [];
+    var weekMaxes = [];
+    for (let day of poss.prices.slice(1)) {
+      weekMins.push(day.min);
+      weekMaxes.push(day.max);
+    }
+    poss.weekMin = Math.min(...weekMins);
+    poss.weekMax = Math.max(...weekMaxes);
+  }
+
+  generated_possibilities.sort((a, b) => a.weekMax < b.weekMax);
 
   return generated_possibilities;
 }

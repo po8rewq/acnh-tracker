@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import bunnyday from '../../data/bunny_day.json';
 import cherryblossom from '../../data/cherry_blossom.json';
@@ -14,19 +14,18 @@ import woodImg from './img/wood.jpg';
 import skyImg from './img/sky.jpg';
 import stoneImg from './img/stone.jpg';
 
-const Wrapper = styled.div`
-  button.active {
-    background-color: #f0e8c0;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    color: #000;
-  }
+const BodyRow = styled.tr`
+  ${p => p.checked && `
+  background-color: #f0e8c0;
+  `}
+  cursor: pointer;
+`;
 
-  button.active:hover {
-    background-color: #f8f9fa;
-  }
-
-  button {
-    cursor: pointer;
+const Recipe = styled.td`
+  display: flex;
+  flex-direction: row;
+  div {
+    margin: 0 10px;
   }
 `;
 
@@ -73,47 +72,72 @@ const RecipeList = () => {
     }
   }
 
+  const renderHeader = () => {
+    if (event === 'bunny_day') {
+      return (
+        <>
+          <th>Name</th>
+          <th>Recipe</th>
+          <th>Price</th>
+        </>
+      )
+    }
+    return <th>Name</th>
+  }
+
   const renderItem = (l) => {
-    // if (event === 'bunny_day' && l.eggs) {
-    //   return (
-    //     <div style={{ display: 'flex', flexDirection: 'row' }}>
-    //       <span>{l.name}</span>
-    //       {Object.keys(l.eggs).map(key => {
-    //         const value = l.eggs[key];
-    //         let img = null;
-    //         switch (key) {
-    //           case 'earth': img = earthImg; break;
-    //           case 'leaf': img = leafImg; break;
-    //           case 'sky': img = skyImg; break;
-    //           case 'stone': img = stoneImg; break;
-    //           case 'water': img = waterImg; break;
-    //           case 'wood': img = woodImg; break;
-    //           default: break;
-    //         }
-    //         return <div key={key} style={{ margin: '0 10px' }}><img src={img} alt="" width="22" /><span>x{value}</span></div>
-    //       })}
-    //     </div>
-    //   );
-    // }
-    return <span>{l.name}</span>
+    if (event === 'bunny_day') {
+      return (
+        <>
+          <td>{l.name}</td>
+          <Recipe>
+            {l.eggs && Object.keys(l.eggs).map(key => {
+              const value = l.eggs[key];
+              let img = null;
+              switch (key) {
+                case 'earth': img = earthImg; break;
+                case 'leaf': img = leafImg; break;
+                case 'sky': img = skyImg; break;
+                case 'stone': img = stoneImg; break;
+                case 'water': img = waterImg; break;
+                case 'wood': img = woodImg; break;
+                default: break;
+              }
+              return <div key={key}><img src={img} alt="" width="22" /><span>x{value}</span></div>
+            })}
+          </Recipe>
+          <td>{l.price}</td>
+        </>
+      );
+    }
+    return <td>{l.name}</td>
   }
 
   return (
-    <Wrapper>
+    <>
       <h3>{title}</h3>
       <p>
         <ProgressBar current={(recipes[event] || []).length} total={list.length} />
       </p>
-      <ListGroup className={list}>
-        {list.map(l => <ListGroupItem
-          active={(recipes[event] || []).indexOf(l.id) !== -1}
-          tag="button"
-          action
-          onClick={() => toggleRecipe(l.id)}
-          key={l.id}>{renderItem(l)}</ListGroupItem>
-        )}
-      </ListGroup>
-    </Wrapper>
+      <Table size="sm" hover borderless responsive>
+        <thead>
+          <tr>
+            {renderHeader()}
+          </tr>
+        </thead>
+        <tbody>
+          {list.map(l => (
+            <BodyRow
+              checked={(recipes[event] || []).indexOf(l.id) !== -1}
+              onClick={() => toggleRecipe(l.id)}
+              key={l.id}
+            >
+              {renderItem(l)}
+            </BodyRow>
+          ))}
+        </tbody>
+      </Table>
+    </>
   )
 }
 

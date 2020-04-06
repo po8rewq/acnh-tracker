@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
-import { analyze_possibilities } from '../../utils/predictions';
+import { generate_possibilities } from '../../utils/predictions';
 
 const Line = styled.tr`
   cursor: pointer;
@@ -19,18 +19,19 @@ const Predictions = ({ buyPrice, sellPrices, displayEstimate }) => {
     const isEmpty = sell_prices.every(sell_price => !sell_price);
     if (isEmpty) return null
 
-    const possibilities = analyze_possibilities(sell_prices);
+    const possibilities = Array.from(generate_possibilities(sell_prices));
     return possibilities.map(poss => {
       // for the additional graphs
-      const days = poss.prices.slice(2);
+      const days = poss.prices.slice(buyPrice === 0 ? 1 : 2);
       const { mins, maxs } = days.reduce((acc, d) => ({
         mins: [...acc.mins, d.min],
         maxs: [...acc.maxs, d.max],
       }), { mins: [], maxs: [] })
 
+      const des = poss.pattern_description.split(',')
       return (
         <Line onClick={() => onClick(mins, maxs)}>
-          <td>{poss.pattern_description}</td>
+          <td><ul>{des.map(d => <li>{d}</li>)}</ul></td>
           {days.map(day => {
             if (day.min !== day.max) return <td>{day.min}..{day.max}</td>;
             return <td>{day.min}</td>;
@@ -43,10 +44,13 @@ const Predictions = ({ buyPrice, sellPrices, displayEstimate }) => {
   return (
     <>
       <h3>Predictions</h3>
-      <Table size="sm" hover borderless responsive>
+      <Table size="sm" hover responsive>
         <thead>
           <tr>
             <th>Pattern</th>
+            {buyPrice === 0 && (
+              <th>Sunday</th>
+            )}
             <th colSpan="2">Monday</th>
             <th colSpan="2">Tuesday</th>
             <th colSpan="2">Wednesday</th>

@@ -7,4 +7,4 @@ Tracker for Animal Crossing: New Horizons, you can find the project [here](https
  * View/track fish by hemisphere and when/where you can catch them
  * View/track fossils
  * View/track events recipe list (Bunny Day - Cherry-blossom)
- * Follow your town's turnip price market
+ * Follow your town's turnip price market (based on [mikebryant/ac-nh-turnip-prices](https://github.com/mikebryant/ac-nh-turnip-prices) project)

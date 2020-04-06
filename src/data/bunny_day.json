@@ -76,126 +76,282 @@
   },
   {
     "id": 7,
-    "name": "Bunny Day Glowy Garland"
+    "name": "Bunny Day Glowy Garland",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 8,
-    "name": "Bunny Day Lamp"
+    "name": "Bunny Day Lamp",
+    "eggs": {
+      "wood": 4
+    },
+    "price": 1600
   },
   {
     "id": 9,
-    "name": "Bunny Day Merry Balloons"
+    "name": "Bunny Day Merry Balloons",
+    "eggs": {
+      "earth": 1,
+      "leaf": 1,
+      "sky": 1
+    },
+    "price": 1200
   },
   {
     "id": 10,
-    "name": "Bunny Day Rug"
+    "name": "Bunny Day Rug",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 11,
-    "name": "Bunny Day Stool"
+    "name": "Bunny Day Stool",
+    "eggs": {
+      "water": 3
+    },
+    "price": 1200
   },
   {
     "id": 12,
-    "name": "Bunny Day Table"
+    "name": "Bunny Day Table",
+    "eggs": {
+      "earth": 4
+    },
+    "price": 1600
   },
   {
     "id": 13,
-    "name": "Bunny Day Vanity"
+    "name": "Bunny Day Vanity",
+    "eggs": {
+      "leaf": 4
+    },
+    "price": 1600
   },
   {
     "id": 14,
-    "name": "Bunny Day Wall"
+    "name": "Bunny Day Wall",
+    "eggs": {
+      "earth": 2,
+      "stone": 2,
+      "leaf": 2,
+      "wood": 2,
+      "sky": 2,
+      "water": 2
+    },
+    "price": 4800
   },
   {
     "id": 15,
-    "name": "Bunny Day Wall Clock"
+    "name": "Bunny Day Wall Clock",
+    "eggs": {
+      "sky": 3
+    },
+    "price": 1200
   },
   {
     "id": 16,
-    "name": "Bunny Day Wardrobe"
+    "name": "Bunny Day Wardrobe",
+    "eggs": {
+      "stone": 4
+    },
+    "price": 1600
   },
   {
     "id": 17,
-    "name": "Bunny Day Wreath"
+    "name": "Bunny Day Wreath",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 18,
-    "name": "Earth-egg Shell"
+    "name": "Earth-egg Shell",
+    "eggs": {
+      "earth": 2
+    },
+    "price": 800
   },
   {
     "id": 19,
-    "name": "Earth-egg Outfit"
+    "name": "Earth-egg Outfit",
+    "eggs": {
+      "earth": 3
+    },
+    "price": 1200
   },
   {
     "id": 20,
-    "name": "Earth-egg Shoes"
+    "name": "Earth-egg Shoes",
+    "eggs": {
+      "earth": 2
+    },
+    "price": 800
   },
   {
     "id": 21,
-    "name": "Leaf-egg Shell"
+    "name": "Leaf-egg Shell",
+    "eggs": {
+      "leaf": 2
+    },
+    "price": 800
   },
   {
     "id": 22,
-    "name": "Leaf-egg Outfit"
+    "name": "Leaf-egg Outfit",
+    "eggs": {
+      "leaf": 3
+    },
+    "price": 1200
   },
   {
     "id": 23,
-    "name": "Leaf-egg Shoes"
+    "name": "Leaf-egg Shoes",
+    "eggs": {
+      "leaf": 2
+    },
+    "price": 800
   },
   {
     "id": 24,
-    "name": "Sky-egg Shell"
+    "name": "Sky-egg Shell",
+    "eggs": {
+      "sky": 2
+    },
+    "price": 800
   },
   {
     "id": 25,
-    "name": "Sky-egg Outfit"
+    "name": "Sky-egg Outfit",
+    "eggs": {
+      "sky": 3
+    },
+    "price": 1200
   },
   {
     "id": 26,
-    "name": "Sky-egg Shoes"
+    "name": "Sky-egg Shoes",
+    "eggs": {
+      "sky": 2
+    },
+    "price": 800
   },
   {
     "id": 27,
-    "name": "Stone-egg Shell"
+    "name": "Stone-egg Shell",
+    "eggs": {
+      "stone": 2
+    },
+    "price": 800
   },
   {
     "id": 28,
-    "name": "Stone-egg Outfit"
+    "name": "Stone-egg Outfit",
+    "eggs": {
+      "stone": 3
+    },
+    "price": 1200
   },
   {
     "id": 29,
-    "name": "Stone-egg Shoes"
+    "name": "Stone-egg Shoes",
+    "eggs": {
+      "stone": 2
+    },
+    "price": 800
   },
   {
     "id": 30,
-    "name": "Wood-egg Shell"
+    "name": "Wood-egg Shell",
+    "eggs": {
+      "wood": 2
+    },
+    "price": 800
   },
   {
     "id": 31,
-    "name": "Wood-egg Outfit"
+    "name": "Wood-egg Outfit",
+    "eggs": {
+      "wood": 3
+    },
+    "price": 1200
   },
   {
     "id": 32,
-    "name": "Wood-egg Shoes"
+    "name": "Wood-egg Shoes",
+    "eggs": {
+      "wood": 2
+    },
+    "price": 800
   },
   {
     "id": 33,
-    "name": "Water-egg Shell"
+    "name": "Water-egg Shell",
+    "eggs": {
+      "water": 2
+    },
+    "price": 800
   },
   {
     "id": 34,
-    "name": "Water-egg Outfit"
+    "name": "Water-egg Outfit",
+    "eggs": {
+      "water": 3
+    },
+    "price": 1200
   },
   {
     "id": 35,
-    "name": "Water-egg Shoes"
+    "name": "Water-egg Shoes",
+    "eggs": {
+      "water": 2
+    },
+    "price": 800
   },
   {
     "id": 36,
-    "name": "Egg Party Outfit"
+    "name": "Egg Party Dress",
+    "eggs": {
+      "earth": 3,
+      "stone": 3,
+      "leaf": 3,
+      "wood": 3,
+      "sky": 3,
+      "water": 3
+    },
+    "price": 7200
   },
   {
     "id": 37,
-    "name": "Egg Party Hat"
+    "name": "Egg Party Hat",
+    "eggs": {
+      "earth": 2,
+      "stone": 2,
+      "leaf": 2,
+      "wood": 2,
+      "sky": 2,
+      "water": 2
+    },
+    "price": 4800
   }
 ]

@@ -7,9 +7,9 @@ import qs from 'qs';
 import { Alert, ButtonGroup, Button } from 'reactstrap';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import * as DateUtils from '../../utils/dates';
-import AddPriceForm from './AddPriceForm';
 import SundayPriceForm from './SundayPriceForm';
 import Predictions from './Predictions';
+import TablePrices from './TablePrices';
 
 import Tooltip from 'chartist-plugin-tooltips'; // needed for chartist
 import Chartist from 'chartist';
@@ -167,12 +167,12 @@ const TurnipsPage = () => {
       <Wrapper>
         <SundayPriceForm onSave={onSaveSundayPrice} currentWeek={currentWeek} value={sundayPrice} />
       </Wrapper>
+      <Wrapper>
+        <TablePrices values={myTownData} savePrice={addNewPrice} />
+      </Wrapper>
       <ChartContainer>
         <ChartistGraph data={simpleLineChartData} type={'Line'} options={options} />
       </ChartContainer>
-      <Wrapper>
-        <AddPriceForm onSave={addNewPrice} />
-      </Wrapper>
       <Wrapper>
         <Predictions buyPrice={sundayPrice} sellPrices={getFormatedData(NaN)} displayEstimate={displayEstimate} />
       </Wrapper>
