@@ -1,35 +1,34 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
-import { generate_possibilities } from '../../utils/predictions';
+import { analyze_possibilities } from '../../utils/predictions';
 
 const Line = styled.tr`
   cursor: pointer;
 `;
 
 const Predictions = ({ buyPrice, sellPrices, displayEstimate }) => {
-  if (!buyPrice) return null; // we don't render this component if we don't have the sell price
-
   const onClick = (min, max) => {
     displayEstimate(min, max);
   }
 
   const renderPatterns = () => {
-    var sell_prices = [buyPrice, buyPrice, ...sellPrices];
+    const p = buyPrice === 0 ? NaN : buyPrice;
+    const sell_prices = [p, p, ...sellPrices];
 
     const isEmpty = sell_prices.every(sell_price => !sell_price);
     if (isEmpty) return null
 
-    // Generator object
-    let result = [];
-    for (let poss of generate_possibilities(sell_prices)) {
-      // console.log(poss)
-      // TODO: optimise
-      const days = [...poss.prices].slice(2);
-      const mins = days.map(d => d.min);
-      const maxs = days.map(d => d.max);
+    const possibilities = analyze_possibilities(sell_prices);
+    return possibilities.map(poss => {
+      // for the additional graphs
+      const days = poss.prices.slice(2);
+      const { mins, maxs } = days.reduce((acc, d) => ({
+        mins: [...acc.mins, d.min],
+        maxs: [...acc.maxs, d.max],
+      }), { mins: [], maxs: [] })
 
-      result.push(
+      return (
         <Line onClick={() => onClick(mins, maxs)}>
           <td>{poss.pattern_description}</td>
           {days.map(day => {
@@ -38,8 +37,7 @@ const Predictions = ({ buyPrice, sellPrices, displayEstimate }) => {
           })}
         </Line>
       )
-    }
-    return result;
+    });
   }
 
   return (

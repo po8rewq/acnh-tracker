@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
-import bunnyday from '../data/bunny_day.json';
-import cherryblossom from '../data/cherry_blossom.json';
-import useLocalStorage from '../hooks/useLocalStorage';
-import ProgressBar from './ProgressBar';
+import bunnyday from '../../data/bunny_day.json';
+import cherryblossom from '../../data/cherry_blossom.json';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import ProgressBar from '../ProgressBar';
+
+import waterImg from './img/water.jpg';
+import earthImg from './img/earth.jpg';
+import leafImg from './img/leaf.jpg';
+import woodImg from './img/wood.jpg';
+import skyImg from './img/sky.jpg';
+import stoneImg from './img/stone.jpg';
 
 const Wrapper = styled.div`
   button.active {
@@ -66,6 +73,31 @@ const RecipeList = () => {
     }
   }
 
+  const renderItem = (l) => {
+    // if (event === 'bunny_day' && l.eggs) {
+    //   return (
+    //     <div style={{ display: 'flex', flexDirection: 'row' }}>
+    //       <span>{l.name}</span>
+    //       {Object.keys(l.eggs).map(key => {
+    //         const value = l.eggs[key];
+    //         let img = null;
+    //         switch (key) {
+    //           case 'earth': img = earthImg; break;
+    //           case 'leaf': img = leafImg; break;
+    //           case 'sky': img = skyImg; break;
+    //           case 'stone': img = stoneImg; break;
+    //           case 'water': img = waterImg; break;
+    //           case 'wood': img = woodImg; break;
+    //           default: break;
+    //         }
+    //         return <div key={key} style={{ margin: '0 10px' }}><img src={img} alt="" width="22" /><span>x{value}</span></div>
+    //       })}
+    //     </div>
+    //   );
+    // }
+    return <span>{l.name}</span>
+  }
+
   return (
     <Wrapper>
       <h3>{title}</h3>
@@ -78,7 +110,7 @@ const RecipeList = () => {
           tag="button"
           action
           onClick={() => toggleRecipe(l.id)}
-          key={l.id}>{l.name}</ListGroupItem>
+          key={l.id}>{renderItem(l)}</ListGroupItem>
         )}
       </ListGroup>
     </Wrapper>

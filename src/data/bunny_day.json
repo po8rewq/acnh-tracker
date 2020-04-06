@@ -1,27 +1,78 @@
 [
   {
     "id": 1,
-    "name": "Bunny Day Bag"
+    "name": "Bunny Day Bag",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 2,
-    "name": "Bunny Day Bed"
+    "name": "Bunny Day Bed",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 3,
-    "name": "Bunny Day Crown"
+    "name": "Bunny Day Crown",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 2400
   },
   {
     "id": 4,
-    "name": "Bunny Day Fence"
+    "name": "Bunny Day Fence",
+    "eggs": {
+      "earth": 1,
+      "stone": 1,
+      "leaf": 1,
+      "wood": 1,
+      "sky": 1,
+      "water": 1
+    },
+    "price": 240
   },
   {
     "id": 5,
-    "name": "Bunny Day Festive Balloons"
+    "name": "Bunny Day Festive Balloons",
+    "eggs": {
+      "stone": 1,
+      "wood": 1,
+      "water": 1
+    },
+    "price": 1200
   },
   {
     "id": 6,
-    "name": "Bunny Day Flooring"
+    "name": "Bunny Day Flooring",
+    "eggs": {
+      "earth": 2,
+      "stone": 2,
+      "leaf": 2,
+      "wood": 2,
+      "sky": 2,
+      "water": 2
+    },
+    "price": 4800
   },
   {
     "id": 7,

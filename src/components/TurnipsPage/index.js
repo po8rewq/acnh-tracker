@@ -152,8 +152,7 @@ const TurnipsPage = () => {
           <ul>
             <li>if you want to update a value, just set it again, it will override the previous one</li>
             <li>if you want to remove a value, set the price to <strong>0</strong></li>
-            <li>You need to set the price from Daisy Mae to see the predictions</li>
-            <li>The predictions will be filtered by the values you add during the week</li>
+            <li>The predictions will be filtered by the values you add during the week, the more the better</li>
             <li>Click on the prediction line to see the graph (you can only see 1 at a time)</li>
           </ul>
         </Alert>

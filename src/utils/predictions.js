@@ -451,7 +451,7 @@ function* generate_pattern_3_with_peak(given_prices, peak_start) {
     let min_pred = null;
     let max_pred = null;
     if (i === peak_start + 3) {
-      min_pred = Math.floor(1.4 * buy_price);
+      min_pred = predicted_prices[peak_start + 2].min;
       max_pred = Math.ceil(2.0 * buy_price);
     } else {
       min_pred = Math.floor(1.4 * buy_price) - 1;
@@ -515,7 +515,6 @@ function* generate_pattern_3(given_prices) {
   }
 }
 
-
 export function* generate_possibilities(sell_prices) {
   if (!isNaN(sell_prices[0])) {
     yield* generate_pattern_0(sell_prices);
@@ -531,4 +530,33 @@ export function* generate_possibilities(sell_prices) {
       yield* generate_pattern_3(sell_prices);
     }
   }
+}
+
+export function analyze_possibilities(sell_prices) {
+  const generated_possibilities = Array.from(generate_possibilities(sell_prices));
+
+  const global_min_max = [];
+  for (var day = 0; day < 14; day++) {
+    let prices = {
+      min: 999,
+      max: 0,
+    }
+    for (let poss of generated_possibilities) {
+      if (poss.prices[day].min < prices.min) {
+        prices.min = poss.prices[day].min;
+      }
+      if (poss.prices[day].max > prices.max) {
+        prices.max = poss.prices[day].max;
+      }
+    }
+    global_min_max.push(prices);
+  }
+
+  generated_possibilities.push({
+    pattern_description: "predicted min/max across all patterns",
+    pattern_number: 4,
+    prices: global_min_max,
+  });
+
+  return generated_possibilities;
 }
