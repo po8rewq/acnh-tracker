@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, ButtonGroup } from 'reactstrap';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 import FishIcons from './FishIcons';
 import fishJson from '../../data/fish.json';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -14,7 +15,7 @@ import HemisphereButton from '../HemisphereButton';
 const BodyRow = styled.tr`
   cursor: pointer;
 
-  ${p => p.checked && `
+  ${(p) => p.checked && `
   background-color: #f0e8c0;
   `}
 
@@ -23,6 +24,15 @@ const BodyRow = styled.tr`
   }
 `;
 
+const Ctr = styled.div`
+  margin: 15px 0;
+`;
+
+const propTypes = {
+  hemisphere: PropTypes.oneOf(['northern', 'southern']).isRequired,
+  setHemisphere: PropTypes.func.isRequired,
+};
+
 const FishTable = ({ hemisphere, setHemisphere }) => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(fishJson);
@@ -30,19 +40,19 @@ const FishTable = ({ hemisphere, setHemisphere }) => {
   const [rSelected, setRSelected] = useState(1);
 
   useEffect(() => {
-    const baseList = rSelected === 2 ? fishJson.filter(v => {
+    const baseList = rSelected === 2 ? fishJson.filter((v) => {
       const currentMonth = dayjs().format('MMM').toLowerCase();
       return v[currentMonth] === 1;
-    }) : [...fishJson]
+    }) : [...fishJson];
     const s = search.trimLeft().trimRight();
-    const newValue = s === '' ? baseList : baseList.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
+    const newValue = s === '' ? baseList : baseList.filter((v) => v.name.toLowerCase().indexOf(s) !== -1);
     setList(newValue);
-  }, [search, rSelected])
+  }, [search, rSelected]);
 
   const renderMonth = (f, month) => {
     const index = getMonth(month, hemisphere);
     return <MonthTag available={f[index] === 1} value={capitalize(month)} />;
-  }
+  };
 
   const toggleFish = (id) => {
     const index = fish.indexOf(id);
@@ -53,67 +63,67 @@ const FishTable = ({ hemisphere, setHemisphere }) => {
       newArray.splice(index, 1);
       setFish(newArray);
     }
-  }
+  };
 
   const onSearchChange = (value) => setSearch(value);
 
-  const renderBody = () => list.map(f => {
-    return (
-      <BodyRow key={f.id} onClick={() => toggleFish(f.id)} checked={fish.indexOf(f.id) !== -1}>
-        <td><FishIcons icon={formatNameToImage(f.name)} /></td>
-        <td>{f.name}</td>
-        <td>{f.location}</td>
-        <td>{f.price}</td>
-        <td>{f.shadow}</td>
-        <td>{f.time}</td>
-        <td>{renderMonth(f, 'jan')}</td>
-        <td>{renderMonth(f, 'feb')}</td>
-        <td>{renderMonth(f, 'mar')}</td>
-        <td>{renderMonth(f, 'apr')}</td>
-        <td>{renderMonth(f, 'may')}</td>
-        <td>{renderMonth(f, 'jun')}</td>
-        <td>{renderMonth(f, 'jul')}</td>
-        <td>{renderMonth(f, 'aug')}</td>
-        <td>{renderMonth(f, 'sep')}</td>
-        <td>{renderMonth(f, 'oct')}</td>
-        <td>{renderMonth(f, 'nov')}</td>
-        <td>{renderMonth(f, 'dec')}</td>
-      </BodyRow>
-    )
-  })
+  const renderBody = () => list.map((f) => (
+    <BodyRow key={f.id} onClick={() => toggleFish(f.id)} checked={fish.indexOf(f.id) !== -1}>
+      <td><FishIcons icon={formatNameToImage(f.name)} /></td>
+      <td>{f.name}</td>
+      <td>{f.location}</td>
+      <td>{f.price}</td>
+      <td>{f.shadow}</td>
+      <td>{f.time}</td>
+      <td>{renderMonth(f, 'jan')}</td>
+      <td>{renderMonth(f, 'feb')}</td>
+      <td>{renderMonth(f, 'mar')}</td>
+      <td>{renderMonth(f, 'apr')}</td>
+      <td>{renderMonth(f, 'may')}</td>
+      <td>{renderMonth(f, 'jun')}</td>
+      <td>{renderMonth(f, 'jul')}</td>
+      <td>{renderMonth(f, 'aug')}</td>
+      <td>{renderMonth(f, 'sep')}</td>
+      <td>{renderMonth(f, 'oct')}</td>
+      <td>{renderMonth(f, 'nov')}</td>
+      <td>{renderMonth(f, 'dec')}</td>
+    </BodyRow>
+  ));
   return (
     <>
-      <p>
+      <Ctr>
         <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
-      </p>
-      <p>
+      </Ctr>
+      <Ctr>
         <Search value={search} onChange={onSearchChange} />
-      </p>
-      <p>
+      </Ctr>
+      <Ctr>
         <ButtonGroup>
-          <Button color={rSelected === 1 ? "primary" : "link"} onClick={() => setRSelected(1)} disabled={rSelected === 1}>See all</Button>
-          <Button color={rSelected === 2 ? "primary" : "link"} onClick={() => setRSelected(2)} disabled={rSelected === 2}>Only those I can catch</Button>
+          <Button color={rSelected === 1 ? 'primary' : 'link'} onClick={() => setRSelected(1)} disabled={rSelected === 1}>See all</Button>
+          <Button color={rSelected === 2 ? 'primary' : 'link'} onClick={() => setRSelected(2)} disabled={rSelected === 2}>Only those I can catch</Button>
         </ButtonGroup>
-      </p>
-      <p>
+      </Ctr>
+      <Ctr>
         <ProgressBar current={fish.length} total={fishJson.length} />
-      </p>
+      </Ctr>
       <Table size="sm" hover borderless responsive>
         <thead>
           <tr>
-            <th></th>
+            <th>&nbsp;</th>
             <th>Name</th>
             <th>Location</th>
             <th>Price</th>
             <th>Shadow</th>
             <th>Time</th>
-            <th colSpan="12" style={{ textAlign: "center" }}>Availability</th>
+            <th colSpan="12" style={{ textAlign: 'center' }}>Availability</th>
           </tr>
         </thead>
         <tbody>{renderBody()}</tbody>
       </Table>
     </>
-  )
-}
+  );
+};
+
+FishTable.propTypes = propTypes;
 
 export default FishTable;

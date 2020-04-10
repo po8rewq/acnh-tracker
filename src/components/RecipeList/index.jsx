@@ -15,7 +15,7 @@ import skyImg from './img/sky.jpg';
 import stoneImg from './img/stone.jpg';
 
 const BodyRow = styled.tr`
-  ${p => p.checked && `
+  ${(p) => p.checked && `
   background-color: #f0e8c0;
   `}
   cursor: pointer;
@@ -29,19 +29,23 @@ const Recipe = styled.td`
   }
 `;
 
+const Ctr = styled.div`
+  margin: 15px 0;
+`;
+
 const supportedEvents = ['bunny_day', 'cherry_blossom'];
 
 const RecipeList = () => {
-  let { event } = useParams();
-  const [list, setList] = useState([])
+  const { event } = useParams();
+  const [list, setList] = useState([]);
   const [title, setTitle] = useState();
 
   if (supportedEvents.indexOf(event) === -1) {
-    throw new Error("Event not supported");
+    throw new Error('Event not supported');
   }
 
-  // TODO: find a better way?
-  const [recipes, setRecipes] = useLocalStorage(`recipes`, { 'bunny_day': [], 'cherry_blossom': [] })
+  // TODO: find a clever way
+  const [recipes, setRecipes] = useLocalStorage('recipes', { bunny_day: [], cherry_blossom: [] });
 
   useEffect(() => {
     switch (event) {
@@ -55,22 +59,22 @@ const RecipeList = () => {
         break;
       default: break;
     }
-  }, [event])
+  }, [event]);
 
   const toggleRecipe = (id) => {
     const index = (recipes[event] || []).indexOf(id);
     if (index === -1) {
       const newobj = { ...recipes };
-      newobj[event] = [...(newobj[event] || []), id]
+      newobj[event] = [...(newobj[event] || []), id];
       setRecipes(newobj);
     } else {
       const newobj = { ...recipes };
       const newArray = [...(newobj[event] || [])];
       newArray.splice(index, 1);
-      newobj[event] = newArray
+      newobj[event] = newArray;
       setRecipes(newobj);
     }
-  }
+  };
 
   const renderHeader = () => {
     if (event === 'bunny_day') {
@@ -80,10 +84,10 @@ const RecipeList = () => {
           <th>Recipe</th>
           <th>Price</th>
         </>
-      )
+      );
     }
-    return <th>Name</th>
-  }
+    return <th>Name</th>;
+  };
 
   const renderItem = (l) => {
     if (event === 'bunny_day') {
@@ -91,7 +95,7 @@ const RecipeList = () => {
         <>
           <td>{l.name}</td>
           <Recipe>
-            {l.eggs && Object.keys(l.eggs).map(key => {
+            {l.eggs && Object.keys(l.eggs).map((key) => {
               const value = l.eggs[key];
               let img = null;
               switch (key) {
@@ -103,22 +107,30 @@ const RecipeList = () => {
                 case 'wood': img = woodImg; break;
                 default: break;
               }
-              return <div key={key}><img src={img} alt="" width="22" /><span>x{value}</span></div>
+              return (
+                <div key={key}>
+                  <img src={img} alt="" width="22" />
+                  <span>
+                    x
+                    {value}
+                  </span>
+                </div>
+              );
             })}
           </Recipe>
           <td>{l.price}</td>
         </>
       );
     }
-    return <td>{l.name}</td>
-  }
+    return <td>{l.name}</td>;
+  };
 
   return (
     <>
       <h3>{title}</h3>
-      <p>
+      <Ctr>
         <ProgressBar current={(recipes[event] || []).length} total={list.length} />
-      </p>
+      </Ctr>
       <Table size="sm" hover borderless responsive>
         <thead>
           <tr>
@@ -126,7 +138,7 @@ const RecipeList = () => {
           </tr>
         </thead>
         <tbody>
-          {list.map(l => (
+          {list.map((l) => (
             <BodyRow
               checked={(recipes[event] || []).indexOf(l.id) !== -1}
               onClick={() => toggleRecipe(l.id)}
@@ -138,7 +150,7 @@ const RecipeList = () => {
         </tbody>
       </Table>
     </>
-  )
-}
+  );
+};
 
 export default RecipeList;

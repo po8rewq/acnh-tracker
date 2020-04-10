@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import icons from '../../data/img/fossils'
+import icons from '../../data/img/fossils';
 
 const iconNames = Object.keys(icons);
 
 const propTypes = {
-  icon: PropTypes.oneOf(iconNames)
-}
+  icon: PropTypes.oneOf(iconNames).isRequired,
+};
 
-const FossilIcons = (props) => <><img src={icons[props.icon]} alt={props.icon} /></>
+const FossilIcons = ({ icon }) => <><img src={icons[icon]} alt={icon} /></>;
 
 FossilIcons.propTypes = propTypes;
 

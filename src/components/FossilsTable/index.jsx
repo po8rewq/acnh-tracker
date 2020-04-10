@@ -11,7 +11,7 @@ import { formatNameToImage } from '../../utils';
 const BodyRow = styled.tr`
   cursor: pointer;
 
-  ${p => p.checked && `
+  ${(p) => p.checked && `
   background-color: #f0e8c0;
   `}
 
@@ -20,17 +20,21 @@ const BodyRow = styled.tr`
   }
 `;
 
+const Ctr = styled.div`
+  margin: 15px 0;
+`;
+
 const FossilsTable = () => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(fossilsJson.fossils); // only the list of fossils, not the groups
   const [fossils, setFossils] = useLocalStorage('fossils', []);
 
   useEffect(() => {
-    const baseList = [...fossilsJson.fossils]
+    const baseList = [...fossilsJson.fossils];
     const s = search.trimLeft().trimRight();
-    const newValue = s === '' ? baseList : baseList.filter(v => v.name.toLowerCase().indexOf(s) !== -1);
+    const newValue = s === '' ? baseList : baseList.filter((v) => v.name.toLowerCase().indexOf(s) !== -1);
     setList(newValue);
-  }, [search])
+  }, [search]);
 
   const onSearchChange = (value) => setSearch(value);
 
@@ -43,7 +47,7 @@ const FossilsTable = () => {
       newArray.splice(index, 1);
       setFossils(newArray);
     }
-  }
+  };
 
   const renderGroup = (groupId) => list.reduce((acc, f) => {
     if (f.groupId !== groupId) return acc;
@@ -59,33 +63,35 @@ const FossilsTable = () => {
       </BodyRow>
     );
     return [...acc, v];
-  }, [])
+  }, []);
 
-  const renderBody = () => fossilsJson.groups.map(group => {
+  const renderBody = () => fossilsJson.groups.map((group) => {
     const content = renderGroup(group.id);
     if (content.length === 0) return null;
     return (
       <Fragment key={`group_${group.id}`}>
         <tr>
-          <th colSpan="3" style={{ textAlign: "center" }}>{group.name}</th>
+          <th colSpan="3" style={{ textAlign: 'center' }}>{group.name}</th>
         </tr>
         {content}
       </Fragment>
-    )
-  })
+    );
+  });
 
   return (
     <>
-      <p>
+      <Ctr>
         <Search value={search} onChange={onSearchChange} />
-      </p>
-      <p>
+      </Ctr>
+      <Ctr>
         <ProgressBar current={fossils.length} total={fossilsJson.fossils.length} />
-      </p>
+      </Ctr>
       <Table size="sm" hover borderless responsive>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              &nbsp;
+            </th>
             <th>Name</th>
             <th>Price</th>
           </tr>
@@ -93,7 +99,7 @@ const FossilsTable = () => {
         <tbody>{renderBody()}</tbody>
       </Table>
     </>
-  )
-}
+  );
+};
 
 export default FossilsTable;

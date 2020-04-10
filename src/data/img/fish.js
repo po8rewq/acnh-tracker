@@ -160,4 +160,4 @@ export default {
   whaleshark,
   yellowperch,
   zebraturkeyfish,
-}
+};

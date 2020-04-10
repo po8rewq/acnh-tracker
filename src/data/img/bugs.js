@@ -17,7 +17,6 @@ import giraffestag from './Giraffe_Stag_NH_Icon.PNG.png';
 import dronebeetle from './Drone_Beetle_NH_Icon.PNG.png';
 import earthboringdungbeetle from './Earth-Boring_Dung_Beetle_NH_Icon.PNG.png';
 import blueweevilbeetle from './Blue_Weevil_Beetle_NH_Icon.PNG.png';
-import Rosalia_Batesi_Beetle from './Rosalia_Batesi_Beetle_NH_Icon.PNG.png';
 import citruslonghornedbeetle from './Citrus_Long-horned_Beetle_NH.png';
 import violinbeetle from './Violinbeetle.png';
 import tigerbeetle from './Tiger_Beetle_HHD_Icon.png';
@@ -102,7 +101,6 @@ export default {
   dronebeetle,
   earthboringdungbeetle,
   blueweevilbeetle,
-  Rosalia_Batesi_Beetle,
   citruslonghornedbeetle,
   violinbeetle,
   tigerbeetle,
@@ -166,4 +164,4 @@ export default {
   walkingstick,
   rajabrookesbirdwing,
   queenalexandrasbirdwing,
-}
+};

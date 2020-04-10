@@ -4,7 +4,7 @@ import ChartistGraph from 'react-chartist';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import qs from 'qs';
-import { Alert, ButtonGroup, Button } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 import Tooltip from 'chartist-plugin-tooltips'; // eslint-disable-line
 import Chartist from 'chartist';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -22,8 +22,24 @@ const Wrapper = styled.div`
   `;
 
 const ChartContainer = styled.div`
-  .ct-series-a .ct-line, .ct-series-b .ct-line {
-    opacity: .5;
+  .ct-series, .ct-point {
+    opacity: .3;
+  }
+
+  .ct-series:last-child .ct-point {
+    opacity: 1;
+    stroke: red;
+  }
+
+  .ct-series:last-child .ct-line {
+    stroke: red;
+    stroke-width: 5px;
+    stroke-dasharray: 10px 20px;
+  }
+
+  .ct-series:last-child {
+    opacity: 1;
+    stroke: red;
   }
 `;
 
@@ -32,42 +48,37 @@ export const LABELS = ['Mon AM', 'Mon PM', 'Tue AM', 'Tue PM', 'Wed AM', 'Wed PM
 const TurnipsPage = () => {
   const history = useHistory();
   const location = useLocation();
-  /** indexed by the date of the sunday for the week ahead
-   * { '05-04-2020': {
-   *    'sundayPrice': 123,
-   *    'graph': [
-   *        {when: 'mon_am', value: 90, order: 1},
-   *    ]
-   *  } }
-   */
   const [turnips, setTurnips] = useLocalStorage('turnips', {});
 
   const [currentWeek, setCurrentWeek] = useState(null);
   const [sundayPrice, setSundayPrice] = useState(0);
   const [myTownData, setMyTownData] = useState([]);
-  const [predictions, setPredictions] = useState({ min: null, max: null });
+  const [isFirstTime, setIsFirstTime] = useState();
+  const [selectedPredictions, setSelectedPredictions] = useState([]);
 
   useEffect(() => {
     // get the week
     const queryObj = qs.parse(location.search.slice(1));
     setCurrentWeek(DateUtils.getSundayDateForWeek(queryObj.date || dayjs().format('YYYY-MM-DD')));
 
-    // get current graph - currentPrice - from local storage
     const weekValues = turnips[currentWeek];
     if (weekValues) {
       setSundayPrice(weekValues.sundayPrice || 0);
       setMyTownData(weekValues.graph || []);
+      setIsFirstTime(weekValues.isFirstTime || false);
     } else {
       setSundayPrice(0);
       setMyTownData([]);
+      setIsFirstTime(false);
     }
   }, [currentWeek, location.search, turnips]);
 
-  const updateLocalStorage = (newPrice, newValues) => {
+  const updateLocalStorage = (newPrice, newValues, firstTime) => {
     const obj = {
       [currentWeek]: {
         sundayPrice: newPrice,
         graph: [...newValues],
+        isFirstTime: firstTime,
       },
     };
     const newObj = { ...turnips, ...obj };
@@ -82,11 +93,17 @@ const TurnipsPage = () => {
     return defaultValue;
   });
 
+  const getSelectedEstimates = () => selectedPredictions.reduce((acc, val) => {
+    const newObj = [];
+    if (val.min) newObj.push(val.min);
+    if (val.max) newObj.push(val.max);
+    return [...acc, ...newObj];
+  }, []);
+
   const simpleLineChartData = {
     labels: LABELS,
     series: [
-      [...(predictions.min ? predictions.min : [])],
-      [...(predictions.max ? predictions.max : [])],
+      ...getSelectedEstimates(),
       getFormatedData(),
     ],
   };
@@ -96,9 +113,9 @@ const TurnipsPage = () => {
     chartPadding: {
       right: 50,
     },
-    high: 800,
-    low: 10,
+    scaleMinSpace: 20,
     height: '400px',
+    onlyInteger: true,
     plugins: [
       Chartist.plugins.tooltip({
         anchorToPoint: true,
@@ -107,9 +124,14 @@ const TurnipsPage = () => {
     ],
   };
 
-  const onSaveSundayPrice = (value) => {
-    setSundayPrice(value);
-    updateLocalStorage(value, myTownData);
+  const onSaveSundayPrice = (field, value) => {
+    if (field === 'price') {
+      setSundayPrice(value);
+      updateLocalStorage(value, myTownData, isFirstTime);
+    } else if (field === 'firstTime') {
+      setIsFirstTime(value);
+      updateLocalStorage(sundayPrice, myTownData, value);
+    }
   };
 
   const addNewPrice = ({ when, price }) => {
@@ -129,7 +151,7 @@ const TurnipsPage = () => {
     }
 
     setMyTownData(newData);
-    updateLocalStorage(sundayPrice, newData);
+    updateLocalStorage(sundayPrice, newData, isFirstTime);
   };
 
   const changeWeek = (next) => {
@@ -139,36 +161,38 @@ const TurnipsPage = () => {
     history.push(`${location.pathname}?date=${newDate}`);
   };
 
-  const displayEstimate = (min, max) => {
-    setPredictions({ min, max });
+  const displayEstimate = (key, min, max) => {
+    const index = selectedPredictions.findIndex((v) => v.key === key);
+    if (index === -1) {
+      const newData = [...selectedPredictions, { key, min, max }];
+      setSelectedPredictions(newData);
+    } else {
+      const newData = [...selectedPredictions];
+      newData.splice(index, 1);
+      setSelectedPredictions(newData);
+    }
+  };
+
+  const resetPrices = () => {
+    setMyTownData([]);
+    updateLocalStorage(sundayPrice, [], isFirstTime);
   };
 
   return (
     <>
-      <Wrapper>
-        <Alert color="warning">
-          <strong>Notes</strong>
-          <ul>
-            <li>
-              if you want to update a value, just set it again, it will override the previous one
-            </li>
-            <li>
-              if you want to remove a value, set the price to&nbsp;
-              <strong>0</strong>
-            </li>
-            <li>
-              The predictions will be filtered by the values you add during the week,&nbsp;
-              the more the better
-            </li>
-            <li>Click on the prediction line to see the graph (you can only see 1 at a time)</li>
-          </ul>
-        </Alert>
-      </Wrapper>
-      <Wrapper>
+      <Wrapper style={{ display: 'flex', flexDirection: 'row' }}>
         <h3>My town prices</h3>
-        <ButtonGroup>
-          <Button onClick={() => changeWeek(false)}>Previous week</Button>
-          <Button onClick={() => changeWeek(true)}>Next week</Button>
+        <ButtonGroup style={{ marginLeft: '20px' }}>
+          <Button onClick={() => changeWeek(false)} size="sm" color="link">
+            {'<'}
+            {' '}
+            Previous week
+          </Button>
+          <Button onClick={() => changeWeek(true)} size="sm" color="link">
+            Next week
+            {' '}
+            {'>'}
+          </Button>
         </ButtonGroup>
       </Wrapper>
       <Wrapper>
@@ -176,10 +200,11 @@ const TurnipsPage = () => {
           onChange={onSaveSundayPrice}
           currentWeek={currentWeek}
           value={sundayPrice}
+          isFirstTime={isFirstTime}
         />
       </Wrapper>
       <Wrapper>
-        <TablePrices values={myTownData} savePrice={addNewPrice} />
+        <TablePrices values={myTownData} savePrice={addNewPrice} reset={resetPrices} />
       </Wrapper>
       <ChartContainer>
         <ChartistGraph data={simpleLineChartData} type="Line" options={options} />
@@ -189,7 +214,8 @@ const TurnipsPage = () => {
           buyPrice={sundayPrice}
           sellPrices={getFormatedData(NaN)}
           displayEstimate={displayEstimate}
-          firstTime={false}
+          isFirstTime={isFirstTime}
+          selectedLines={selectedPredictions}
         />
       </Wrapper>
     </>

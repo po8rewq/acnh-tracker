@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import icons from '../../data/img/bugs'
+import icons from '../../data/img/bugs';
 
 const iconNames = Object.keys(icons);
 
 const propTypes = {
-  icon: PropTypes.oneOf(iconNames)
-}
+  icon: PropTypes.oneOf(iconNames).isRequired,
+};
 
-const BugIcons = (props) => <><img src={icons[props.icon]} alt={props.icon} /></>
+const BugIcons = ({ icon }) => <><img src={icons[icon]} alt={icon} /></>;
 
 BugIcons.propTypes = propTypes;
 

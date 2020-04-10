@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import FishTable from './components/FishTable';
 import BugsTable from './components/BugsTable';
@@ -15,8 +15,7 @@ const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Header />
-      <p></p>
-      <Container>
+      <Container fluid="md" style={{ marginTop: '15px' }}>
         <Switch>
           <Route path="/diy/:event">
             <RecipeList />
@@ -36,7 +35,7 @@ const App = () => {
         </Switch>
       </Container>
     </Router>
-  )
-}
+  );
+};
 
 export default App;

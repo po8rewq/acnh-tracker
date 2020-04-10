@@ -1,5 +1,7 @@
 import React from 'react';
-import { Table, Input } from 'reactstrap';
+import {
+  Table, Input, Button, Container,
+} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -9,9 +11,10 @@ const propTypes = {
     order: PropTypes.number,
   })).isRequired,
   savePrice: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
-const TablePrices = ({ values, savePrice }) => {
+const TablePrices = ({ values, savePrice, reset }) => {
   const onChange = ({ field, value }) => {
     savePrice({
       when: field,
@@ -30,8 +33,8 @@ const TablePrices = ({ values, savePrice }) => {
         type="number"
         name=""
         id=""
-        placeholder=""
-        value={value}
+        placeholder="--"
+        value={value || ''}
         onChange={(e) => onChange({
           field: name,
           value: e.currentTarget.value,
@@ -41,39 +44,44 @@ const TablePrices = ({ values, savePrice }) => {
   };
 
   return (
-    <Table borderless>
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th>Monday</th>
-          <th>Tuesday</th>
-          <th>Wednesday</th>
-          <th>Thursday</th>
-          <th>Friday</th>
-          <th>Saturday</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>AM</td>
-          <td>{renderInput('Mon AM')}</td>
-          <td>{renderInput('tue AM')}</td>
-          <td>{renderInput('Wed AM')}</td>
-          <td>{renderInput('Thu AM')}</td>
-          <td>{renderInput('Fri AM')}</td>
-          <td>{renderInput('Sat AM')}</td>
-        </tr>
-        <tr>
-          <td>PM</td>
-          <td>{renderInput('Mon PM')}</td>
-          <td>{renderInput('Tue PM')}</td>
-          <td>{renderInput('Wed PM')}</td>
-          <td>{renderInput('Thu PM')}</td>
-          <td>{renderInput('Fri PM')}</td>
-          <td>{renderInput('Sat PM')}</td>
-        </tr>
-      </tbody>
-    </Table>
+    <>
+      <Table borderless>
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AM</td>
+            <td>{renderInput('Mon AM')}</td>
+            <td>{renderInput('tue AM')}</td>
+            <td>{renderInput('Wed AM')}</td>
+            <td>{renderInput('Thu AM')}</td>
+            <td>{renderInput('Fri AM')}</td>
+            <td>{renderInput('Sat AM')}</td>
+          </tr>
+          <tr>
+            <td>PM</td>
+            <td>{renderInput('Mon PM')}</td>
+            <td>{renderInput('Tue PM')}</td>
+            <td>{renderInput('Wed PM')}</td>
+            <td>{renderInput('Thu PM')}</td>
+            <td>{renderInput('Fri PM')}</td>
+            <td>{renderInput('Sat PM')}</td>
+          </tr>
+        </tbody>
+      </Table>
+      <Container style={{ textAlign: 'center' }}>
+        <Button onClick={reset}>Reset</Button>
+      </Container>
+    </>
   );
 };
 
