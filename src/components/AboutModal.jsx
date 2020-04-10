@@ -1,12 +1,23 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button, Modal, ModalHeader, ModalBody, ModalFooter,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
-const AboutModal = ({ toggle, show = false }) => (
+const propTypes = {
+  toggle: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+};
+
+const AboutModal = ({ toggle, show }) => (
   <Modal isOpen={show} toggle={toggle}>
     <ModalHeader toggle={toggle}>About</ModalHeader>
     <ModalBody>
       <p>
-        This project is open source, and you can find the code on <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">GitHub</a>. Feel free to report issues, suggest features, or even submit a pull request.
+        This project is open source, and you can find the code on
+        {' '}
+        <a href="https://github.com/po8rewq/acnh-tracker" rel="noopener noreferrer" target="_blank">GitHub</a>
+        . Feel free to report issues, suggest features, or even submit a pull request.
       </p>
       <p>
         All information is compiled from:
@@ -16,21 +27,27 @@ const AboutModal = ({ toggle, show = false }) => (
               href="https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)"
               rel="noopener noreferrer"
               target="_blank"
-            >https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)</a>
+            >
+              https://animalcrossing.fandom.com/wiki/Fish_(New_Horizons)
+            </a>
           </li>
           <li>
             <a
               href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)"
               rel="noopener noreferrer"
               target="_blank"
-            >https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)</a>
+            >
+              https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)
+            </a>
           </li>
           <li>
             <a
               href="https://animalcrossing.fandom.com/wiki/Fossils_(New_Horizons)"
               rel="noopener noreferrer"
               target="_blank"
-            >https://animalcrossing.fandom.com/wiki/Fossils_(New_Horizons)</a>
+            >
+              https://animalcrossing.fandom.com/wiki/Fossils_(New_Horizons)
+            </a>
           </li>
         </ul>
       </p>
@@ -41,7 +58,9 @@ const AboutModal = ({ toggle, show = false }) => (
             href="https://github.com/mikebryant/ac-nh-turnip-prices"
             rel="noopener noreferrer"
             target="_blank"
-          >ac-nh-turnip-prices</a>
+          >
+            ac-nh-turnip-prices
+          </a>
         </ul>
       </p>
     </ModalBody>
@@ -50,5 +69,7 @@ const AboutModal = ({ toggle, show = false }) => (
     </ModalFooter>
   </Modal>
 );
+
+AboutModal.propTypes = propTypes;
 
 export default AboutModal;

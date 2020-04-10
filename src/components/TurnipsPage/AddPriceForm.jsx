@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { LABELS } from './';
+import {
+  Form, FormGroup, Label, Input, Button,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
+import { LABELS } from '.';
+
+const propTypes = {
+  onSave: PropTypes.func.isRequired,
+};
 
 const AddPriceForm = ({ onSave }) => {
   const [price, setPrice] = useState(0);
   const [when, setWhen] = useState(LABELS[0]);
 
   const onSavePrice = () => {
-    onSave({ when, price: parseInt(price) });
-  }
+    onSave({ when, price: parseInt(price, 10) });
+  };
 
   const onChange = (value, field) => {
     switch (field) {
@@ -20,7 +27,7 @@ const AddPriceForm = ({ onSave }) => {
         break;
       default: break;
     }
-  }
+  };
 
   return (
     <Form inline onSubmit={(e) => { e.preventDefault(); onSavePrice(); }}>
@@ -33,7 +40,7 @@ const AddPriceForm = ({ onSave }) => {
           value={when}
           onChange={(e) => onChange(e.currentTarget.value, 'when')}
         >
-          {LABELS.map(v => <option key={v}>{v}</option>)}
+          {LABELS.map((v) => <option key={v}>{v}</option>)}
         </Input>
       </FormGroup>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -48,7 +55,9 @@ const AddPriceForm = ({ onSave }) => {
       </FormGroup>
       <Button color="primary" onClick={onSavePrice}>Submit</Button>
     </Form>
-  )
-}
+  );
+};
+
+AddPriceForm.propTypes = propTypes;
 
 export default AddPriceForm;

@@ -1,31 +1,50 @@
 import React from 'react';
 import { Table, Input } from 'reactstrap';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  values: PropTypes.arrayOf(PropTypes.shape({
+    when: PropTypes.string,
+    price: PropTypes.number,
+    order: PropTypes.number,
+  })).isRequired,
+  savePrice: PropTypes.func.isRequired,
+};
 
 const TablePrices = ({ values, savePrice }) => {
   const onChange = ({ field, value }) => {
     savePrice({
       when: field,
-      price: parseInt(value)
-    })
-  }
+      price: parseInt(value, 10),
+    });
+  };
 
-  const formateLabelName = (l) => l.trim().replace(' ', '_').toLowerCase()
+  const formateLabelName = (l) => l.trim().replace(' ', '_').toLowerCase();
 
   const renderInput = (name) => {
-    const v = values.find(v => v.when === formateLabelName(name));
-    let value = "";
-    if (v) value = v.price === 0 ? "" : v.price;
-    return <Input type="number" name="" id="" placeholder="" value={value} onChange={(e) => onChange({
-      field: name,
-      value: e.currentTarget.value
-    })} />
-  }
+    const v = values.find((val) => val.when === formateLabelName(name));
+    let value = '';
+    if (v) value = v.price === 0 ? '' : v.price;
+    return (
+      <Input
+        type="number"
+        name=""
+        id=""
+        placeholder=""
+        value={value}
+        onChange={(e) => onChange({
+          field: name,
+          value: e.currentTarget.value,
+        })}
+      />
+    );
+  };
 
   return (
     <Table borderless>
       <thead>
         <tr>
-          <th></th>
+          <th>&nbsp;</th>
           <th>Monday</th>
           <th>Tuesday</th>
           <th>Wednesday</th>
@@ -55,7 +74,9 @@ const TablePrices = ({ values, savePrice }) => {
         </tr>
       </tbody>
     </Table>
-  )
-}
+  );
+};
+
+TablePrices.propTypes = propTypes;
 
 export default TablePrices;

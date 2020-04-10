@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -24,7 +24,7 @@ const Header = () => {
   const toggle = () => setIsOpen(!isOpen);
   const toggleModal = () => setModal(!modal);
 
-  const pathname = location.pathname.split('/')[1]
+  const pathname = location.pathname.split('/')[1];
   const currentPage = pathname || 'fish';
 
   return (
@@ -45,7 +45,7 @@ const Header = () => {
               <NavLink href={`${process.env.PUBLIC_URL}/#/fossils`} active={currentPage === 'fossils'}>Fossils</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar active={currentPage === 'diy'}>
-              <DropdownToggle nav caret >
+              <DropdownToggle nav caret>
                 Seasonal recipes
               </DropdownToggle>
               <DropdownMenu right>
@@ -61,11 +61,11 @@ const Header = () => {
               <NavLink href={`${process.env.PUBLIC_URL}/#/turnips`} active={currentPage === 'turnips'}>Turnips</NavLink>
             </NavItem>
           </Nav>
-          <NavLink style={{ cursor: "pointer" }} onClick={toggleModal}>About</NavLink>
+          <NavLink style={{ cursor: 'pointer' }} onClick={toggleModal}>About</NavLink>
         </Collapse>
       </Navbar>
     </Container>
   );
-}
+};
 
 export default Header;
