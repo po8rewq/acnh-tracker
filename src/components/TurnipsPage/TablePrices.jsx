@@ -45,7 +45,7 @@ const TablePrices = ({ values, savePrice, reset }) => {
 
   return (
     <>
-      <Table borderless>
+      <Table borderless size="sm" responsive>
         <thead>
           <tr>
             <th>&nbsp;</th>

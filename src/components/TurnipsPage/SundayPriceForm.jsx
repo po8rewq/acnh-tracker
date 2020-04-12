@@ -24,7 +24,7 @@ const SundayPriceForm = ({
 }) => {
   const renderDate = () => (
     <strong>
-      Sunday
+      Sunday&nbsp;
       {dayjs(currentWeek).format('DD MMMM YYYY')}
     </strong>
   );

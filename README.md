@@ -20,7 +20,10 @@ Schema for the local storage:
     'isFirstTime': true,
     'graph': [
         {when: 'mon_am', value: 90, order: 1},
-    ]
+    ],
+    'qty': 500,
+    'sellPrice': 90,
+    'pattern': 'LARGE_SPIKE',
   } 
 }
 ```

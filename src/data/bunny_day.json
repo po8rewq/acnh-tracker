@@ -353,5 +353,36 @@
       "water": 2
     },
     "price": 4800
+  },
+  {
+    "id": 38,
+    "name": "Bunny Day arch",
+    "eggs": {
+      "earth": 2,
+      "stone": 2,
+      "leaf": 2,
+      "wood": 2,
+      "sky": 2,
+      "water": 2
+    },
+    "price": 4800
+  },
+  {
+    "id": 39,
+    "name": "Wobbling Zipper Toy",
+    "eggs": {
+      "earth": 4,
+      "stone": 4,
+      "leaf": 4,
+      "wood": 4,
+      "sky": 4,
+      "water": 4
+    },
+    "price": 9600
+  },
+  {
+    "id": 40,
+    "name": "Bunny Day Wand",
+    "price": 11100
   }
 ]

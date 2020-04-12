@@ -14,4 +14,6 @@ export const getSundayDateForWeek = (refDate) => {
   return currentWeek;
 };
 
-export const tmp = () => null; // TODO: rm
+export const getNextWeek = (week) => dayjs(week).add(1, 'week').format('YYYY-MM-DD');
+
+export const getPreviousWeek = (week) => dayjs(week).subtract(1, 'week').format('YYYY-MM-DD');
