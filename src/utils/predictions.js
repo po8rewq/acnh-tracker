@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const PATTERN = {
+export const PATTERN = {
   FLUCTUATING: 0,
   LARGE_SPIKE: 1,
   DECREASING: 2,

@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-import { analyze_possibilities } from '../../utils/predictions'; // eslint-disable-line
+import { analyze_possibilities, PATTERN } from '../../utils/predictions'; // eslint-disable-line
 
 const Line = styled.tr`
   cursor: pointer;
@@ -21,15 +21,17 @@ const propTypes = {
   displayEstimate: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool,
   selectedLines: PropTypes.arrayOf(PropTypes.object),
+  lastWeekPattern: PropTypes.number,
 };
 
 const defaultProps = {
   selectedLines: [],
   isFirstTime: false,
+  lastWeekPattern: -1,
 };
 
 const Predictions = ({
-  buyPrice, sellPrices, displayEstimate, isFirstTime, selectedLines,
+  buyPrice, sellPrices, displayEstimate, isFirstTime, selectedLines, lastWeekPattern,
 }) => {
   const onClick = (key, min, max) => {
     displayEstimate(key, min, max);
@@ -42,7 +44,7 @@ const Predictions = ({
     const isEmpty = prices.every((s) => !s);
     if (isEmpty) return null;
 
-    const possibilities = analyze_possibilities(prices, isFirstTime, -1);
+    const possibilities = analyze_possibilities(prices, isFirstTime, (PATTERN[lastWeekPattern] || -1));
     return possibilities.map((poss) => {
       // for the additional graphs - we don't need the sunday price
       const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
@@ -54,7 +56,7 @@ const Predictions = ({
       const key = `${poss.pattern_description.replace(/[" "]/g, '').toLowerCase()}_${days[0].min}_${days[0].max}`;
       const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
       return (
-        <Line onClick={() => onClick(key, mins, maxs)} key={key} selected={isSelected}>
+        <Line onClick={() => onClick(key, mins, maxs)} key={shortid.generate()} selected={isSelected}>
           <td>{poss.pattern_description}</td>
           <td>{Number.isFinite(poss.probability) ? (`${(poss.probability * 100).toPrecision(3)}%`) : '--'}</td>
           {days.map((day) => <td key={shortid.generate()}>{day.min !== day.max ? `${day.min} to ${day.max}` : day.min}</td>)}
