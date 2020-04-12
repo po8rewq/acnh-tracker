@@ -72,6 +72,8 @@ const TurnipsPage = () => {
     const lastWeek = turnips[DateUtils.getPreviousWeek(currentWeek)];
     if (lastWeek && lastWeek.pattern) {
       setLastWeekPattern(lastWeek.pattern);
+    } else {
+      setLastWeekPattern(null);
     }
 
     const weekValues = turnips[currentWeek];
@@ -79,16 +81,16 @@ const TurnipsPage = () => {
       setSundayPrice(weekValues.sundayPrice || 0);
       setMyTownData(weekValues.graph || []);
       setIsFirstTime(weekValues.isFirstTime || false);
-      setQuantityBought(weekValues.qty || null);
+      setQuantityBought(weekValues.qty || 0);
       setPattern(weekValues.pattern || -1);
-      setSellPrice(weekValues.sellPrice || null);
+      setSellPrice(weekValues.sellPrice || 0);
     } else {
       setSundayPrice(0);
       setMyTownData([]);
       setIsFirstTime(false);
-      setQuantityBought(null);
+      setQuantityBought(0);
       setPattern(-1);
-      setSellPrice(null);
+      setSellPrice(0);
     }
   }, [currentWeek, location.search, turnips]);
 
