@@ -9,16 +9,16 @@ import { PATTERN } from '../../utils/predictions';
 const propTypes = {
   onChange: PropTypes.func.isRequired,
   quantity: PropTypes.number,
-  pattern: PropTypes.string,
+  pattern: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   sellPrice: PropTypes.number,
   sundayPrice: PropTypes.number,
 };
 
 const defaultProps = {
   quantity: 0,
-  pattern: null,
-  sellPrice: null,
-  sundayPrice: null,
+  pattern: -1,
+  sellPrice: 0,
+  sundayPrice: 0,
 };
 
 const ResultForm = ({

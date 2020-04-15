@@ -13,6 +13,14 @@ const Line = styled.tr`
   ${(p) => p.selected && `
   background-color: #f0e8c0;
   `}
+
+  td.lowest-price {
+    background: #f8d7da;
+  }
+
+  td.highest-price {
+    background: #d4edda;
+  }
 `;
 
 const propTypes = {
@@ -37,6 +45,30 @@ const Predictions = ({
     displayEstimate(key, min, max);
   };
 
+  const renderDays = (days) => {
+    // not used yet
+    const { min, max } = days.reduce((acc, val) => {
+      const newObj = { ...acc };
+      if (val.max > acc.max) newObj.max = val.max;
+      if (val.min < acc.min) newObj.min = val.min;
+      return newObj;
+    }, { min: 0, max: 0 });
+
+    return days.map((day) => {
+      const className = '';
+      // if (day.min === min) className = 'lowest-price';
+      // if (day.max === max) className = 'highest-price';
+      return (
+        <td
+          key={shortid.generate()}
+          className={className}
+        >
+          {day.min !== day.max ? `${day.min} to ${day.max}` : day.min}
+        </td>
+      );
+    });
+  };
+
   const renderPatterns = () => {
     const p = buyPrice === 0 ? NaN : buyPrice;
     const prices = [p, p, ...sellPrices];
@@ -44,7 +76,11 @@ const Predictions = ({
     const isEmpty = prices.every((s) => !s);
     if (isEmpty) return null;
 
-    const possibilities = analyze_possibilities(prices, isFirstTime, (PATTERN[lastWeekPattern] || -1));
+    const possibilities = analyze_possibilities(
+      prices,
+      isFirstTime,
+      (PATTERN[lastWeekPattern] || -1),
+    );
     return possibilities.map((poss) => {
       // for the additional graphs - we don't need the sunday price
       const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
@@ -56,10 +92,14 @@ const Predictions = ({
       const key = `${poss.pattern_description.replace(/[" "]/g, '').toLowerCase()}_${days[0].min}_${days[0].max}`;
       const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
       return (
-        <Line onClick={() => onClick(key, mins, maxs)} key={shortid.generate()} selected={isSelected}>
+        <Line
+          onClick={() => onClick(key, mins, maxs)}
+          key={shortid.generate()}
+          selected={isSelected}
+        >
           <td>{poss.pattern_description}</td>
           <td>{Number.isFinite(poss.probability) ? (`${(poss.probability * 100).toPrecision(3)}%`) : '--'}</td>
-          {days.map((day) => <td key={shortid.generate()}>{day.min !== day.max ? `${day.min} to ${day.max}` : day.min}</td>)}
+          {renderDays(days)}
           <td>{poss.weekGuaranteedMinimum}</td>
           <td>{poss.weekMax}</td>
         </Line>
