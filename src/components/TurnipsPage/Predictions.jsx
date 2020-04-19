@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'reactstrap';
+import { Table, ListGroupItem, ListGroup } from 'reactstrap';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
@@ -7,20 +7,25 @@ import { analyze_possibilities, PATTERN } from '../../utils/predictions'; // esl
 
 const Line = styled.tr`
   cursor: pointer;
-  td {
-    text-align: center;
-  }
+
   ${(p) => p.selected && `
   background-color: #f0e8c0;
   `}
 
-  td.lowest-price {
-    background: #f8d7da;
+  td {
+    text-align: center;
   }
 
-  td.highest-price {
-    background: #d4edda;
+  span.lowest-price {
+    color: #ffc107;
+    font-weight: bold;
   }
+
+  span.highest-price {
+    color: #28a745;
+    font-weight: bold;
+  }
+
 `;
 
 const propTypes = {
@@ -49,67 +54,109 @@ const Predictions = ({
     // not used yet
     const { min, max } = days.reduce((acc, val) => {
       const newObj = { ...acc };
-      if (val.max > acc.max) newObj.max = val.max;
-      if (val.min < acc.min) newObj.min = val.min;
+      if (!acc.max || val.max > acc.max) newObj.max = val.max;
+      if (!acc.min || val.min < acc.min) newObj.min = val.min;
       return newObj;
-    }, { min: 0, max: 0 });
+    }, { min: null, max: null });
 
-    return days.map((day) => {
-      const className = '';
-      // if (day.min === min) className = 'lowest-price';
-      // if (day.max === max) className = 'highest-price';
-      return (
-        <td
-          key={shortid.generate()}
-          className={className}
-        >
-          {day.min !== day.max ? `${day.min} to ${day.max}` : day.min}
-        </td>
-      );
-    });
+    // const renderMin = (day) => {
+    //   const className = day.min === min ? 'lowest-price' : '';
+    //   return <span className={className}>{day.min}</span>;
+    // };
+
+    // const renderMax = (day) => {
+    //   const className = day.max === max ? 'highest-price' : '';
+    //   return <span className={className}>{day.max}</span>;
+    // };
+
+    const renderValue = (value) => {
+      let className = '';
+      if (value === min) className = 'lowest-price';
+      else if (value === max) className = 'highest-price';
+      return <span className={className}>{value}</span>;
+    };
+
+    return days.map((day) => (
+      <td key={shortid.generate()}>
+        {day.min !== day.max ? (
+          <>
+            {renderValue(day.min)}
+            &nbsp;to&nbsp;
+            {renderValue(day.max)}
+          </>
+        ) : renderValue(day.min)}
+      </td>
+    ));
   };
 
-  const renderPatterns = () => {
-    const p = buyPrice === 0 ? NaN : buyPrice;
-    const prices = [p, p, ...sellPrices];
+  const renderPercentage = (percent) => (Number.isFinite(percent) ? (`${(percent * 100).toPrecision(3)}%`) : '—');
 
-    const isEmpty = prices.every((s) => !s);
-    if (isEmpty) return null;
+  const renderPatterns = (possibilities) => possibilities.map((poss) => {
+    // for the additional graphs - we don't need the sunday price
+    const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
+      mins: [...acc.mins, d.min],
+      maxs: [...acc.maxs, d.max],
+    }), { mins: [], maxs: [] });
 
-    const possibilities = analyze_possibilities(
-      prices,
-      isFirstTime,
-      (PATTERN[lastWeekPattern] || -1),
+    const days = poss.prices.slice(1);
+    const key = JSON.stringify(poss.prices);
+    const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
+
+    return (
+      <Line
+        onClick={() => onClick(key, mins, maxs)}
+        key={shortid.generate()}
+        selected={isSelected}
+      >
+        <td>{poss.pattern_description}</td>
+        <td>{renderPercentage(poss)}</td>
+        {renderDays(days)}
+        <td>{poss.weekGuaranteedMinimum}</td>
+        <td>{poss.weekMax}</td>
+      </Line>
     );
-    return possibilities.map((poss) => {
-      // for the additional graphs - we don't need the sunday price
-      const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
-        mins: [...acc.mins, d.min],
-        maxs: [...acc.maxs, d.max],
-      }), { mins: [], maxs: [] });
+  });
 
-      const days = poss.prices.slice(1);
-      const key = `${poss.pattern_description.replace(/[" "]/g, '').toLowerCase()}_${days[0].min}_${days[0].max}`;
-      const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
-      return (
-        <Line
-          onClick={() => onClick(key, mins, maxs)}
-          key={shortid.generate()}
-          selected={isSelected}
-        >
-          <td>{poss.pattern_description}</td>
-          <td>{Number.isFinite(poss.probability) ? (`${(poss.probability * 100).toPrecision(3)}%`) : '--'}</td>
-          {renderDays(days)}
-          <td>{poss.weekGuaranteedMinimum}</td>
-          <td>{poss.weekMax}</td>
-        </Line>
-      );
-    });
+  const renderPatternProbabilities = (possibilities) => {
+    let previousPattern = '';
+    return possibilities.reduce((acc, poss) => {
+      if (previousPattern !== poss.pattern_number) {
+        previousPattern = poss.pattern_number;
+        if (!poss.category_total_probability) return [...acc];
+        // const patternCount = possibilities.filter((val) => val.pattern_number === poss.pattern_number).length;
+        const newValue = (
+          <ListGroupItem key={poss.pattern_description}>{`${poss.pattern_description}: ${renderPercentage(poss.category_total_probability)}`}</ListGroupItem>
+        );
+        return [...acc, newValue];
+      }
+      return [...acc];
+    }, []);
   };
+
+  // ----
+  const p = buyPrice === 0 ? NaN : buyPrice;
+  const prices = [p, p, ...sellPrices];
+
+  const isEmpty = prices.every((s) => !s);
+  if (isEmpty) return null;
+
+  const possibilities = analyze_possibilities(
+    prices,
+    isFirstTime,
+    (PATTERN[lastWeekPattern] || -1),
+  );
+  // ----
 
   return (
     <>
       <h3>Predictions</h3>
+
+      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+        <ListGroup horizontal>
+          {renderPatternProbabilities(possibilities)}
+        </ListGroup>
+      </div>
+
       <Table size="sm" hover responsive>
         <thead>
           <tr>
@@ -126,7 +173,7 @@ const Predictions = ({
             <th>Potential Max</th>
           </tr>
         </thead>
-        <tbody>{renderPatterns()}</tbody>
+        <tbody>{renderPatterns(possibilities)}</tbody>
       </Table>
     </>
   );
