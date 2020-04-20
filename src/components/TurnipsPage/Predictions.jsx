@@ -59,16 +59,6 @@ const Predictions = ({
       return newObj;
     }, { min: null, max: null });
 
-    // const renderMin = (day) => {
-    //   const className = day.min === min ? 'lowest-price' : '';
-    //   return <span className={className}>{day.min}</span>;
-    // };
-
-    // const renderMax = (day) => {
-    //   const className = day.max === max ? 'highest-price' : '';
-    //   return <span className={className}>{day.max}</span>;
-    // };
-
     const renderValue = (value) => {
       let className = '';
       if (value === min) className = 'lowest-price';
@@ -109,7 +99,7 @@ const Predictions = ({
         selected={isSelected}
       >
         <td>{poss.pattern_description}</td>
-        <td>{renderPercentage(poss)}</td>
+        <td>{renderPercentage(poss.probability)}</td>
         {renderDays(days)}
         <td>{poss.weekGuaranteedMinimum}</td>
         <td>{poss.weekMax}</td>
