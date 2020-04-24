@@ -3,7 +3,7 @@ import { Table, ListGroupItem, ListGroup } from 'reactstrap';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-import { analyze_possibilities, PATTERN } from '../../utils/predictions'; // eslint-disable-line
+import Predictor, { PATTERN } from '../../utils/predictions'; // eslint-disable-line
 
 const Line = styled.tr`
   cursor: pointer;
@@ -130,11 +130,12 @@ const Predictions = ({
   const isEmpty = prices.every((s) => !s);
   if (isEmpty) return null;
 
-  const possibilities = analyze_possibilities(
+  const predictor = new Predictor(
     prices,
     isFirstTime,
     (PATTERN[lastWeekPattern] || -1),
   );
+  const possibilities = predictor.analyze_possibilities();
   // ----
 
   return (
