@@ -28,9 +28,9 @@ const Header = () => {
   const currentPage = pathname || 'fish';
 
   return (
-    <Container>
+    <Container fluid style={{ padding: '0' }}>
       <AboutModal show={modal} toggle={toggleModal} />
-      <Navbar color="light" light expand="md">
+      <Navbar color="#f1e26f" light expand="md" style={{ background: '#f1e26f' }}>
         <NavbarBrand href={process.env.PUBLIC_URL}>AC:NH tracker</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

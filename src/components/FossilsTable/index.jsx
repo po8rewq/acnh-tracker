@@ -7,6 +7,7 @@ import FossilIcons from './FossilIcon';
 import Search from '../Search';
 import ProgressBar from '../ProgressBar';
 import { formatNameToImage } from '../../utils';
+import SectionContainer from '../SectionContainer';
 
 const BodyRow = styled.tr`
   cursor: pointer;
@@ -79,7 +80,7 @@ const FossilsTable = () => {
   });
 
   return (
-    <>
+    <SectionContainer>
       <Ctr>
         <Search value={search} onChange={onSearchChange} />
       </Ctr>
@@ -98,7 +99,7 @@ const FossilsTable = () => {
         </thead>
         <tbody>{renderBody()}</tbody>
       </Table>
-    </>
+    </SectionContainer>
   );
 };
 

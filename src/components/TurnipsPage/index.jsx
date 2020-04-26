@@ -13,6 +13,7 @@ import SundayPriceForm from './SundayPriceForm';
 import Predictions from './Predictions';
 import TablePrices from './TablePrices';
 import ResultForm from './ResultForm';
+import SectionContainer from '../SectionContainer';
 
 import 'chartist/dist/chartist.min.css';
 import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css';
@@ -216,7 +217,7 @@ const TurnipsPage = () => {
   };
 
   return (
-    <>
+    <SectionContainer>
       <Wrapper style={{ display: 'flex', flexDirection: 'row' }}>
         <h3>My town prices</h3>
         <ButtonGroup style={{ marginLeft: '20px' }}>
@@ -265,7 +266,7 @@ const TurnipsPage = () => {
           lastWeekPattern={lastWeekPattern}
         />
       </Wrapper>
-    </>
+    </SectionContainer>
   );
 };
 

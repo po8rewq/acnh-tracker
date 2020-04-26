@@ -6,6 +6,7 @@ import bunnyday from '../../data/bunny_day.json';
 import cherryblossom from '../../data/cherry_blossom.json';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import ProgressBar from '../ProgressBar';
+import SectionContainer from '../SectionContainer';
 
 import waterImg from './img/water.jpg';
 import earthImg from './img/earth.jpg';
@@ -126,7 +127,7 @@ const RecipeList = () => {
   };
 
   return (
-    <>
+    <SectionContainer>
       <h3>{title}</h3>
       <Ctr>
         <ProgressBar current={(recipes[event] || []).length} total={list.length} />
@@ -149,7 +150,7 @@ const RecipeList = () => {
           ))}
         </tbody>
       </Table>
-    </>
+    </SectionContainer>
   );
 };
 

@@ -11,6 +11,7 @@ import ProgressBar from '../ProgressBar';
 import Search from '../Search';
 import MonthTag from '../MonthTag';
 import HemisphereButton from '../HemisphereButton';
+import SectionContainer from '../SectionContainer';
 
 const BodyRow = styled.tr`
   cursor: pointer;
@@ -90,7 +91,7 @@ const FishTable = ({ hemisphere, setHemisphere }) => {
     </BodyRow>
   ));
   return (
-    <>
+    <SectionContainer>
       <Ctr>
         <HemisphereButton hemisphere={hemisphere} callback={setHemisphere} />
       </Ctr>
@@ -120,7 +121,7 @@ const FishTable = ({ hemisphere, setHemisphere }) => {
         </thead>
         <tbody>{renderBody()}</tbody>
       </Table>
-    </>
+    </SectionContainer>
   );
 };
 
