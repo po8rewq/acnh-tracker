@@ -527,6 +527,12 @@
       "name": "T. rex tail",
       "price": 5000,
       "groupId": 22
+    },
+    {
+      "id": 75,
+      "name": "Dimetrodon torso",
+      "price": 5000,
+      "groupId": 6
     }
   ]
 }
