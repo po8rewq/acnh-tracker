@@ -5,6 +5,14 @@ import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import Predictor, { PATTERN } from '../../utils/predictions'; // eslint-disable-line
 
+const PATTERN_DESCRIPTION = [
+  'Fluctuating',
+  'Large spike',
+  'Decreasing',
+  'Small spike',
+  'All patterns',
+];
+
 const Line = styled.tr`
   cursor: pointer;
 
@@ -98,7 +106,7 @@ const Predictions = ({
         key={shortid.generate()}
         selected={isSelected}
       >
-        <td>{poss.pattern_description}</td>
+        <td>{PATTERN_DESCRIPTION[poss.pattern_number]}</td>
         <td>{renderPercentage(poss.probability)}</td>
         {renderDays(days)}
         <td>{poss.weekGuaranteedMinimum}</td>
@@ -113,9 +121,8 @@ const Predictions = ({
       if (previousPattern !== poss.pattern_number) {
         previousPattern = poss.pattern_number;
         if (!poss.category_total_probability) return [...acc];
-        // const patternCount = possibilities.filter((val) => val.pattern_number === poss.pattern_number).length;
         const newValue = (
-          <ListGroupItem key={poss.pattern_description}>{`${poss.pattern_description}: ${renderPercentage(poss.category_total_probability)}`}</ListGroupItem>
+          <ListGroupItem key={poss.pattern_number}>{`${PATTERN_DESCRIPTION[poss.pattern_number]}: ${renderPercentage(poss.category_total_probability)}`}</ListGroupItem>
         );
         return [...acc, newValue];
       }
@@ -143,7 +150,7 @@ const Predictions = ({
       <h3>Predictions</h3>
 
       <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-        <ListGroup horizontal>
+        <ListGroup horizontal="lg">
           {renderPatternProbabilities(possibilities)}
         </ListGroup>
       </div>

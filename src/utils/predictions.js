@@ -659,7 +659,6 @@ class Predictor {
     }
 
     yield {
-      pattern_description: "Fluctuating",
       pattern_number: 0,
       prices: predicted_prices,
       probability,
@@ -727,8 +726,8 @@ class Predictor {
     }
 
     // Now each day is independent of next
-    let min_randoms = [0.9, 1.4, 2.0, 1.4, 0.9, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
-    let max_randoms = [1.4, 2.0, 6.0, 2.0, 1.4, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9]
+    let min_randoms = [0.9, 1.4, 2.0, 1.4, 0.9, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4];
+    let max_randoms = [1.4, 2.0, 6.0, 2.0, 1.4, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9];
     for (let i = peak_start; i < 14; i++) {
       probability *= this.generate_individual_random_price(
         given_prices, predicted_prices, i, 1, min_randoms[i - peak_start],
@@ -738,7 +737,6 @@ class Predictor {
       }
     }
     yield {
-      pattern_description: "Large spike",
       pattern_number: 1,
       prices: predicted_prices,
       probability,
@@ -785,7 +783,6 @@ class Predictor {
     }
 
     yield {
-      pattern_description: "Decreasing",
       pattern_number: 2,
       prices: predicted_prices,
       probability,
@@ -866,7 +863,6 @@ class Predictor {
     }
 
     yield {
-      pattern_description: "Small spike",
       pattern_number: 3,
       prices: predicted_prices,
       probability,
@@ -911,11 +907,11 @@ class Predictor {
         } else {
           // All buy prices are equal probability and we're at the outmost layer,
           // so don't need to multiply_generator_probability here.
-          yield* this.generate_all_patterns(temp_sell_prices, previous_pattern)
+          yield* this.generate_all_patterns(temp_sell_prices, previous_pattern);
         }
       }
     } else {
-      yield* this.generate_all_patterns(sell_prices, previous_pattern)
+      yield* this.generate_all_patterns(sell_prices, previous_pattern);
     }
   }
 
@@ -923,12 +919,12 @@ class Predictor {
     const sell_prices = this.prices;
     const first_buy = this.first_buy;
     const previous_pattern = this.previous_pattern;
-    let generated_possibilities = []
+    let generated_possibilities = [];
     for (let i = 0; i < 6; i++) {
       this.fudge_factor = i;
       generated_possibilities = Array.from(this.generate_possibilities(sell_prices, first_buy, previous_pattern));
       if (generated_possibilities.length > 0) {
-        // console.log("Generated possibilities using fudge factor %d: ", i, generated_possibilities);
+        console.log("Generated possibilities using fudge factor %d: ", i, generated_possibilities);
         break;
       }
     }
@@ -960,7 +956,7 @@ class Predictor {
       poss.weekMax = Math.max(...weekMaxes);
     }
 
-    let category_totals = {}
+    let category_totals = {};
     for (let i of [0, 1, 2, 3]) {
       category_totals[i] = generated_possibilities
         .filter(value => value.pattern_number == i)
@@ -981,7 +977,7 @@ class Predictor {
       const prices = {
         min: 999,
         max: 0,
-      }
+      };
       for (let poss of generated_possibilities) {
         if (poss.prices[day].min < prices.min) {
           prices.min = poss.prices[day].min;
@@ -994,7 +990,6 @@ class Predictor {
     }
 
     generated_possibilities.unshift({
-      pattern_description: "All patterns",
       pattern_number: 4,
       prices: global_min_max,
       weekGuaranteedMinimum: Math.min(...generated_possibilities.map(poss => poss.weekGuaranteedMinimum)),
