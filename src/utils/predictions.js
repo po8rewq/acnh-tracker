@@ -924,7 +924,7 @@ class Predictor {
       this.fudge_factor = i;
       generated_possibilities = Array.from(this.generate_possibilities(sell_prices, first_buy, previous_pattern));
       if (generated_possibilities.length > 0) {
-        console.log("Generated possibilities using fudge factor %d: ", i, generated_possibilities);
+        // console.log("Generated possibilities using fudge factor %d: ", i, generated_possibilities);
         break;
       }
     }

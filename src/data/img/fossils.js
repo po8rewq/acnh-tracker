@@ -25,6 +25,7 @@ import deinonytorso from './NH-Furniture-deinonytorso.png';
 import deinonytail from './NH-Furniture-deinonytail.png';
 import dimetrodontail from './NH-Furniture-dimetrodontail.png';
 import dimetrodonskull from './NH-Furniture-dimetrodonskull.png';
+import dimetrodontorso from './Dimetrodon_Torso(New_Horizons).jpg'; // TODO: change
 import diplotailtip from './NH-Furniture-diplotailtip.png';
 import diplotail from './NH-Furniture-diplotail.png';
 import diplopelvis from './NH-Furniture-diplopelvis.png';
@@ -99,7 +100,7 @@ export default {
   deinonytorso,
   deinonytail,
   dimetrodontail,
-  // dimetrodontorso,
+  dimetrodontorso,
   dimetrodonskull,
   diplotailtip,
   diplotail,
