@@ -233,6 +233,13 @@ const TurnipsPage = () => {
           </Button>
         </ButtonGroup>
       </Wrapper>
+      <Wrapper style={{ fontStyle: 'italic' }}>
+        This tool is based on
+        {' '}
+        <a href="https://twitter.com/_Ninji" rel="noopener noreferrer" target="_blank">Ninji</a>
+        {'\'s '}
+        data mining.
+      </Wrapper>
       <Wrapper>
         <SundayPriceForm
           onChange={onSaveSundayPrice}
