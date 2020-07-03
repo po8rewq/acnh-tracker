@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BugIcons from './BugIcons';
+
 import ProgressTable from '../ProgressTable';
-import bugsJson from '../../data/bugs.json';
+import SeaCreatureIcons from './SeaCreatureIcons';
+import creaturesJson from '../../data/sea_creatures.json';
 import { formatNameToImage } from '../../utils';
 
 const propTypes = {
@@ -10,40 +11,39 @@ const propTypes = {
   setHemisphere: PropTypes.func.isRequired,
 };
 
-const BugsTable = ({ hemisphere, setHemisphere }) => {
-  const body = (bug) => (
-    <>
-      <td><BugIcons icon={formatNameToImage(bug.name)} /></td>
-      <td>{bug.name}</td>
-      <td>{bug.location}</td>
-      <td>{bug.price}</td>
-      <td>{bug.time}</td>
-    </>
-  );
-
+const SeaCreaturesTable = ({ hemisphere, setHemisphere }) => {
   const header = () => (
     <>
       <th>&nbsp;</th>
       <th>Name</th>
-      <th>Location</th>
       <th>Price</th>
       <th>Shadow</th>
       <th>Time</th>
     </>
   );
 
+  const body = (item) => (
+    <>
+      <td><SeaCreatureIcons icon={formatNameToImage(item.name)} /></td>
+      <td>{item.name}</td>
+      <td>{item.price}</td>
+      <td />
+      <td>{item.time}</td>
+    </>
+  );
+
   return (
     <ProgressTable
-      renderTableBody={body}
       renderTableHeader={header}
-      dataJson={bugsJson}
-      localStorageName="bugs"
+      renderTableBody={body}
+      dataJson={creaturesJson}
+      localStorageName="seacreatures"
       hemisphere={hemisphere}
       setHemisphere={setHemisphere}
     />
   );
 };
 
-BugsTable.propTypes = propTypes;
+SeaCreaturesTable.propTypes = propTypes;
 
-export default BugsTable;
+export default SeaCreaturesTable;

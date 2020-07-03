@@ -11,6 +11,7 @@ const TurnipsPage = lazy(() => import('./components/TurnipsPage'));
 const FishTable = lazy(() => import('./components/FishTable'));
 const BugsTable = lazy(() => import('./components/BugsTable'));
 const FossilsTable = lazy(() => import('./components/FossilsTable'));
+const SeaCreaturesTable = lazy(() => import('./components/SeaCreaturesTable'));
 
 const App = () => {
   const [hemisphere, setHemisphere] = useLocalStorage('hemisphere', 'northern');
@@ -26,6 +27,9 @@ const App = () => {
             </Route>
             <Route path="/bugs">
               <BugsTable hemisphere={hemisphere} setHemisphere={setHemisphere} />
+            </Route>
+            <Route path="/sea_creatures">
+              <SeaCreaturesTable hemisphere={hemisphere} setHemisphere={setHemisphere} />
             </Route>
             <Route path="/fossils">
               <FossilsTable />

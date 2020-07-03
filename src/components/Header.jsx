@@ -42,6 +42,9 @@ const Header = () => {
               <NavLink href={`${process.env.PUBLIC_URL}/#/bugs`} active={currentPage === 'bugs'}>Bugs</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink href={`${process.env.PUBLIC_URL}/#/sea_creatures`} active={currentPage === 'sea_creatures'}>Sea creatures</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href={`${process.env.PUBLIC_URL}/#/fossils`} active={currentPage === 'fossils'}>Fossils</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar active={currentPage === 'diy'}>
