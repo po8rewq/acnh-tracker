@@ -49,7 +49,7 @@ const Header = () => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar active={currentPage === 'diy'}>
               <DropdownToggle nav caret>
-                Seasonal recipes
+                Seasonal items
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/bunny_day`}>
@@ -57,6 +57,9 @@ const Header = () => {
                 </DropdownItem>
                 <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/cherry_blossom`}>
                   Cherry-blossom
+                </DropdownItem>
+                <DropdownItem href={`${process.env.PUBLIC_URL}/#/diy/mario_set`}>
+                  Mario theme set
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

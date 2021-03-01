@@ -4,6 +4,7 @@ import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import bunnyday from '../../data/bunny_day.json';
 import cherryblossom from '../../data/cherry_blossom.json';
+import marioset from '../../data/mario_theme.json';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import ProgressBar from '../ProgressBar';
 import SectionContainer from '../SectionContainer';
@@ -34,7 +35,7 @@ const Ctr = styled.div`
   margin: 15px 0;
 `;
 
-const supportedEvents = ['bunny_day', 'cherry_blossom'];
+const supportedEvents = ['bunny_day', 'cherry_blossom', 'mario_set'];
 
 const RecipeList = () => {
   const { event } = useParams();
@@ -46,7 +47,11 @@ const RecipeList = () => {
   }
 
   // TODO: find a clever way
-  const [recipes, setRecipes] = useLocalStorage('recipes', { bunny_day: [], cherry_blossom: [] });
+  const [recipes, setRecipes] = useLocalStorage('recipes', {
+    bunny_day: [],
+    cherry_blossom: [],
+    mario_set: [],
+  });
 
   useEffect(() => {
     switch (event) {
@@ -57,6 +62,10 @@ const RecipeList = () => {
       case 'cherry_blossom':
         setTitle('Cherry-blossom');
         setList(cherryblossom);
+        break;
+      case 'mario_set':
+        setTitle('Mario theme set');
+        setList(marioset);
         break;
       default: break;
     }

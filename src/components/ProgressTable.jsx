@@ -57,7 +57,7 @@ const ProgressTable = ({
     const s = search.trimLeft().trimRight();
     const newValue = s === '' ? baseList : baseList.filter((v) => v.name.toLowerCase().indexOf(s) !== -1);
     setList(newValue);
-  }, [search, rSelected]);
+  }, [search, rSelected, dataJson]);
 
   const renderMonth = (f, month) => {
     const index = getMonth(month, hemisphere);

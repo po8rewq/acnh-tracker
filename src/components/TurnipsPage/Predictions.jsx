@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Table, ListGroupItem, ListGroup } from 'reactstrap';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -89,33 +89,37 @@ const Predictions = ({
 
   const renderPercentage = (percent) => (Number.isFinite(percent) ? (`${(percent * 100).toPrecision(3)}%`) : '—');
 
-  const renderPatterns = (possibilities) => possibilities.map((poss) => {
-    // for the additional graphs - we don't need the sunday price
-    const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
-      mins: [...acc.mins, d.min],
-      maxs: [...acc.maxs, d.max],
-    }), { mins: [], maxs: [] });
+  const renderPatterns = (possibilities) => {
+    if (!possibilities) return [];
+    return possibilities.map((poss) => {
+      // for the additional graphs - we don't need the sunday price
+      const { mins, maxs } = poss.prices.slice(2).reduce((acc, d) => ({
+        mins: [...acc.mins, d.min],
+        maxs: [...acc.maxs, d.max],
+      }), { mins: [], maxs: [] });
 
-    const days = poss.prices.slice(1);
-    const key = JSON.stringify(poss.prices);
-    const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
+      const days = poss.prices.slice(1);
+      const key = JSON.stringify(poss.prices);
+      const isSelected = selectedLines.findIndex((v) => v.key === key) !== -1;
 
-    return (
-      <Line
-        onClick={() => onClick(key, mins, maxs)}
-        key={shortid.generate()}
-        selected={isSelected}
-      >
-        <td>{PATTERN_DESCRIPTION[poss.pattern_number]}</td>
-        <td>{renderPercentage(poss.probability)}</td>
-        {renderDays(days)}
-        <td>{poss.weekGuaranteedMinimum}</td>
-        <td>{poss.weekMax}</td>
-      </Line>
-    );
-  });
+      return (
+        <Line
+          onClick={() => onClick(key, mins, maxs)}
+          key={shortid.generate()}
+          selected={isSelected}
+        >
+          <td>{PATTERN_DESCRIPTION[poss.pattern_number]}</td>
+          <td>{renderPercentage(poss.probability)}</td>
+          {renderDays(days)}
+          <td>{poss.weekGuaranteedMinimum}</td>
+          <td>{poss.weekMax}</td>
+        </Line>
+      );
+    });
+  }
 
   const renderPatternProbabilities = (possibilities) => {
+    if (!possibilities) return [];
     let previousPattern = '';
     return possibilities.reduce((acc, poss) => {
       if (previousPattern !== poss.pattern_number) {
@@ -130,20 +134,20 @@ const Predictions = ({
     }, []);
   };
 
-  // ----
-  const p = buyPrice === 0 ? NaN : buyPrice;
-  const prices = [p, p, ...sellPrices];
-
-  const isEmpty = prices.every((s) => !s);
-  if (isEmpty) return null;
-
-  const predictor = new Predictor(
-    prices,
-    isFirstTime,
-    (PATTERN[lastWeekPattern] || -1),
-  );
-  const possibilities = predictor.analyze_possibilities();
-  // ----
+  const possibilities = useMemo(() => {
+    const p = buyPrice === 0 ? NaN : buyPrice;
+    const prices = [p, p, ...sellPrices];
+  
+    const isEmpty = prices.every((s) => !s);
+    if (isEmpty) return null;
+  
+    const predictor = new Predictor(
+      prices,
+      isFirstTime,
+      (PATTERN[lastWeekPattern] || -1),
+    );
+    return predictor.analyze_possibilities();
+  }, [buyPrice, sellPrices, isFirstTime, lastWeekPattern]);
 
   return (
     <>

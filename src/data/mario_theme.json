@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "name": "1-Up Mushroom"
+  },
+  {
+    "id": 2,
+    "name": "Block"
+  },
+  {
+    "id": 3,
+    "name": "Coin"
+  },
+  {
+    "id": 4,
+    "name": "Fire Flower"
+  },
+  {
+    "id": 5,
+    "name": "Floating block"
+  },
+  {
+    "id": 6,
+    "name": "Goal Pole"
+  },
+  {
+    "id": 7,
+    "name": "Large Mushroom Platform"
+  },
+  {
+    "id": 8,
+    "name": "Pipe"
+  },
+  {
+    "id": 9,
+    "name": "Shell"
+  },
+  {
+    "id": 10,
+    "name": "Small Mushroom Platform"
+  },
+  {
+    "id": 11,
+    "name": "Super Mushroom"
+  },
+  {
+    "id": 12,
+    "name": "Super Star"
+  },
+  {
+    "id": 13,
+    "name": "Thwomp"
+  },
+  {
+    "id": 14,
+    "name": "? Block"
+  },
+  {
+    "id": 15,
+    "name": "Luigi hat"
+  },
+  {
+    "id": 16,
+    "name": "Mario hat"
+  },
+  {
+    "id": 17,
+    "name": "Princess Peach crown"
+  },
+  {
+    "id": 18,
+    "name": "Wario hat"
+  },
+  {
+    "id": 19,
+    "name": "Luigi 'stache"
+  },
+  {
+    "id": 20,
+    "name": "Mario 'stache"
+  },
+  {
+    "id": 21,
+    "name": "Wario 'stache"
+  },
+  {
+    "id": 22,
+    "name": "Luigi outfit"
+  },
+  {
+    "id": 23,
+    "name": "Mario outfit"
+  },
+  {
+    "id": 24,
+    "name": "Princess Peach dress"
+  },
+  {
+    "id": 25,
+    "name": "Wario outfit"
+  },
+  {
+    "id": 26,
+    "name": "Luigi shoes"
+  },
+  {
+    "id": 27,
+    "name": "Mario shoes"
+  },
+  {
+    "id": 28,
+    "name": "Princess Peach shoes"
+  },
+  {
+    "id": 29,
+    "name": "Wario shoes"
+  },
+  {
+    "id": 30,
+    "name": "Mushroom mural"
+  },
+  {
+    "id": 31,
+    "name": "Block flooring"
+  },
+  {
+    "id": 32,
+    "name": "Lakitu's Cloud rug"
+  },
+  {
+    "id": 33,
+    "name": "Yoshi's Egg rug"
+  }
+]
